@@ -115,8 +115,7 @@
         	  originalCode = data;
         	},
         	error   : function(xhr, status, e) {
-        	  var errorMessage = "failed to load example..."
-        	                      +"\nrequest URL: "+exampleURL
+        	  var errorMessage = "failed to load example: "+exampleURL
         	                      +"\nstatus: "+xhr.status+" "+xhr.statusText;
         	  throwErrorMessage("error1000",errorMessage);
             consoleEditor.setCode(errorMessage);
@@ -140,7 +139,7 @@
       $(".error-message", $errID).html(message);
     }
     else {
-      $errorContainer.append('<div class="ui-widget" id="'+id+'"><div class="ui-state-error ui-corner-all"><p><span class="ui-icon ui-icon-alert"></span><strong>Error:</strong> <span class="error-message">'+message+'</span></p></div></div>');
+      $errorContainer.append('<div class="ui-widget" id="'+id+'"><div class="ui-state-error ui-corner-all"><p><span class="ui-icon ui-icon-alert"></span><strong>Error:</strong> <span class="error-message">'+message.replace(/\n/g,"<br/>")+'</span></p></div></div>');
     }
   }
   
@@ -214,8 +213,8 @@
   window.console.log = function(){
     if(arguments.length > 0) {
       $("#clearlog").show("fast");
-      $("#logging").append("<li>"+arguments[0]+"</li>");
-      window.console.oldLog(arguments[0]);
+      $("#logging").append("<li>"+arguments[0].replace(/\n/g,"<br/>")+"</li>");
+      console.oldLog(arguments[0]);
     }
   };
   
