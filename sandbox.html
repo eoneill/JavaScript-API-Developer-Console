@@ -1,0 +1,24 @@
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.5b1.js"></script>
+<script type="text/javascript">
+function run(body, url, params) {
+    
+  /* build the framework script */
+  var framework = document.createElement("script");
+  try {
+    framework.appendChild( document.createTextNode(params) );
+  }
+  catch(e) {
+    framework.text = params;  // IE will fail with appendChild, so fall back
+  }
+  framework.type = "text/javascript";
+  framework.src = url;
+  
+  $("body").append(body);
+  document.body.appendChild(framework);
+}
+</script>
+</head>
+<body></body>
+</html>

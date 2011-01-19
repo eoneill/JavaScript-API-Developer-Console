@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  function demoLoginTagAuthCapture() {
+    console.log("an auth event has occured, recorded from login tag");
+  }
+  function demoLoginTagLogoutCapture() {
+    console.log("a logout event has occured, recorded from login tag");
+  }
+</script>
+
+<script type="in/login" data-onAuth="demoLoginTagAuthCapture" data-onLogout="demoLoginTagLogoutCapture">
+  <p>
+    You are logged in and authorized.
+  </p>
+</script>

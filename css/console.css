@@ -1,0 +1,57 @@
+/* HEADERS */
+h1 { font-size: 250%; }
+/* hide h2 headers */
+h2 { position: absolute; text-indent: -99999em; }
+
+/* WRAPPER */
+#main {  font-size: 120%; margin: 10px; min-width: 820px; overflow: hidden; }
+
+/* LEFT CONTAINER */
+#container { background: #efefef; float: left; margin-right: 1%; padding: 10px; width: 68%; }
+
+/* CONSOLE / EDITOR AREA */
+#console-container { overflow: hidden; width: 100%; }
+#console-container textarea { border: 1px solid #adadad; height: 350px; margin-bottom: 10px; width: 99.5%; }
+#console-container .CodeMirror-wrapping { background: #fff; border: 1px solid #adadad; margin-bottom: 10px; }
+#status { display: none; float: left; }
+
+/* BUTTONS */
+#button-container { float: right; }
+#savecode { display: none; }
+#copyurl { display: none; }
+#clearlog { display: none; }
+
+/* RESULT */
+#result-container { border: 1px dashed #adadad; margin-top: 10px; position: relative; }
+#sandbox { font-size: 130%; height: 350px; padding: 10px; }
+#sandbox iframe { background: transparent; border: 0; height: 100%; width: 100%; }
+ul#icons { bottom: -1px; position: absolute; right: -1px; }
+ul#icons li { cursor: pointer; float: left; squarenone outside none; margin: 2px; padding: 4px 0; position: relative; }
+ul#icons span.ui-icon { float: left; margin: 0 4px; }
+
+/* SIDEBAR */
+#sidebar { float: left; width: 28%; }
+/* override some of the form properties for usability */
+#framework-form .standard-form { margin: 0; }
+#framework-form .standard-form ul { padding: 0; }
+#framework-form .standard-form label.inline { float: left; width: auto; }
+#examples .category { font-size: 14px; font-weight: bold; }
+#examples ul { list-style: none; margin: 0; padding: 0; }
+#examples ul ul { list-style: circle; margin-left: 24px; }
+
+/* MESSAGES */
+.ui-state-error,
+.ui-state-highlight { margin-bottom:0.5em; padding: 0pt 0.7em; }
+.ui-state-error p,
+.ui-state-highlight p { margin: 1em 0; }
+.ui-icon-alert,
+.ui-icon-info { float: left; margin-right: 0.3em; }
+ { display: none; margin-top:10px; }
+/* noscript alert message, hide if JS enabled */
+.js .noscript { display: none; }
+/* message containers */
+#error-container,
+#tiny-url-container { display: none; margin-top:10px; }
+
+/* LOGGING */
+#logging { list-style: square; }

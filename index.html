@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>JavaScript API Developer Console</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link media="all" type="text/css" href="http://www.linkedin.com/css/reset.css" rel="stylesheet"/>
+  <link media="all" type="text/css" href="http://www.linkedin.com/css/default.css" rel="stylesheet"/>
+  <link media="all" type="text/css" href="http://www.linkedin.com/css/forms.css" rel="stylesheet"/>
+  <link media="all" type="text/css" href="css/jqueryui/jqueryui.css" rel="stylesheet"/>
+  <link media="all" type="text/css" href="css/console.css" rel="stylesheet"/>
+</head>
+<body>
+  <script type="text/javascript">document.body.className += " js " /*@cc_on+'ie'+ScriptEngineMinorVersion()@*/;</script>
+  <div id="main">
+    <h1>JavaScript API Developer Console</h1>
+    <div id="container">
+      <div id="console-container">
+        <h2>Code</h2>
+        <div class="ui-widget noscript">
+          <div class="ui-state-error ui-corner-all">
+        	  <p>
+        	    <span class="ui-icon ui-icon-alert"></span> 
+        		  <strong>Alert:</strong> This development tool requires JavaScript to function. Please enable JavaScript.
+        		</p>
+        	</div>
+        </div>
+        <textarea name="code-console" id="code-console"></textarea>
+        <div id="status">(status)</div>
+        <div id="button-container">
+          <!--a href="#" id="copyurl">Copy URL</a-->
+          <a href="#" id="cleanup">Clean Up</a>
+          <a href="#" id="savecode">Save</a>
+          <a href="#" id="runcode">Run</a>
+        </div>
+      </div>
+      <div id="result-container">
+        <h2>Result</h2>
+        <div id="sandbox"></div>
+        <ul id="icons">
+          <li id="contract-sandbox" title="Contract Sandbox" class="ui-state-default ui-corner-all">
+            <span class="ui-icon ui-icon-carat-1-n"></span>
+          </li>
+          <li id="expand-sandbox" title="Expand Sandbox" class="ui-state-default ui-corner-all">
+            <span class="ui-icon ui-icon-carat-1-s"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="sidebar">
+      <h2>Options</h2>
+      <div id="sidebar-accordion">
+        <h3><a href="#">Framework Options</a></h3>
+        <div id="framework-form">
+          <form class="standard-form stacked">
+            <div id="framework">
+              <!-- load list of frameworks via ajax -->
+            </div>
+          </form>
+        </div>
+        <h3><a href="#">Examples</a></h3>
+        <div id="examples">
+          <!-- load list of examples via ajax -->
+        </div>
+        <h3><a href="#">Reference</a></h3>
+        <div id="reference">
+          <!-- TODO: reference/docs -->
+          <p>
+            This section will be populated with documentation to assist in configuring widgets and API calls.
+          </p>
+        </div>
+        <h3><a href="#">Logging</a></h3>
+        <div id="log">
+          <!-- TODO: Logging response -->
+          <ul id="logging"></ul>
+          <a href="#" id="clearlog">[ clear log ]</a>
+        </div>
+      </div>
+      <div id="error-container"></div>
+      <div class="ui-widget" id="tiny-url-container">
+        <div class="ui-state-highlight ui-corner-all"> 
+      	  <p>
+      	    <span class="ui-icon ui-icon-info"></span>
+      		  <strong>Share this:</strong> <a href="#" id="tiny-url"></a>
+      		</p>
+      	</div>
+      </div>
+    </div>
+  </div>
+  <!-- just playing with the new jQuery beta, can safely revert to 1.4.* -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.5b1.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>  
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/codemirror/codemirror.js"></script>
+  <script type="text/javascript" src="js/console.js"></script>
+</body>
+</html>

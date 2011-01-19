@@ -1,0 +1,79 @@
+<ul>
+  <li>
+    <label for="framework-selector">Framework:</label>
+    <div class="fieldgroup">
+      <span class="error"></span>
+      <select name="framework-selector" id="framework-selector">
+        <option value="http://platform.linkedin.com/in.js">Production</option>
+        <option value="http://qatest216b.qa.linkedin.com:8080/uas/in.js">QA Test</option>
+        <option value="http://#thiserver#:8080/uas/in.js">This Server</option>
+        <option value="http://localhost:8080/uas/in.js">localhost</option>
+        <option value="custom">--Custom Framework--</option>
+      </select>
+    </div>
+  </li>
+  <li id="framework-custom">
+    <label for="framework-url-custom">Framework URL:</label>
+    <div class="fieldgroup">
+      <span class="error"></span>
+      <input type="text" id="framework-url-custom" name="framework-url-custom" />
+    </div>
+  </li>
+  <li>
+    <label for="api-key">API Key:</label>
+    <div class="fieldgroup">
+      <span class="error"></span>
+      <input type="text" id="api-key" name="api-key" />
+    </div>
+  </li>
+</ul>
+[ <a href="#" class="more-link" alt="fewer options">more options</a> ]
+<ul class="more">
+  <li>
+    <label for="api-version">Version:</label>
+    <div class="fieldgroup">
+      <span class="error"></span>
+      <select id="api-version" name="api-version">
+        <option value="stable">Current Stable</option>
+        <option value="rc">Release Candidate</option>
+        <option value="legacy">Legacy</option>
+        <option value="none">--None--</option>
+      </select>
+    </div>
+  </li>
+  <li>
+    <label for="api-onload">onLoad:</label>
+    <div class="fieldgroup">
+      <span class="error"></span>
+      <input type="text" id="api-onload" name="api-onload" />
+    </div>
+  </li>
+  <li>
+    <label for="api-onload">Extensions:</label>
+    <div class="fieldgroup">
+      <span class="error"></span>
+      <input type="text" id="api-extensions" name="api-extensions" />
+    </div>
+  </li>
+  <li>
+    <label for="api-credentials" class="inline">Credentials Cookie:</label>
+    <div class="fieldgroup inline">
+      <span class="error"></span>
+      <input type="checkbox" id="api-credentials" name="api-credentials" />
+    </div>
+  </li>
+  <li>
+    <label for="api-auth" class="inline">Authorize:</label>
+    <div class="fieldgroup inline">
+      <span class="error"></span>
+      <input type="checkbox" id="api-auth" name="api-auth" />
+    </div>
+  </li>
+  <li>
+    <label for="api-debug" class="inline">Debug:</label>
+    <div class="fieldgroup inline">
+      <span class="error"></span>
+      <input type="checkbox" id="api-debug" name="api-debug" />
+    </div>
+  </li>
+</ul>
