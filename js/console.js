@@ -413,6 +413,10 @@
     if(connectURL === "custom") {
       connectURL = $frameworkCustomURL.val();
       console.log("using custom framework: "+connectURL);
+      if(connectURL === "") {
+        connectURL = $("option", $frameworkSelector).first().val();
+        console.log("no framework provided...\nfalling back to Production framework:\n"+connectURL)
+      }
     }
     else {
       connectURL = connectURL.replace("#thiserver#",window.location.hostname);
