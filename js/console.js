@@ -7,6 +7,22 @@
  *              jQuery Cookie Plugin (https://github.com/carhartl/jquery-cookie),
  *              CodeMirror (http://codemirror.net/)
  **/
+
+/* set up console for logging */
+if (!window.console || !window.console.log) {
+ window.console = window.console || {};
+ window.console.log = window.console.log || function(){};
+}
+/* override default console.log */
+window.console.oldLog = window.console.log;
+window.console.log = function(){
+ if(arguments.length > 0) {
+   $("#clearlog").show("fast");
+   $("#logging").append("<li>"+arguments[0].replace(/\n/g,"<br/>")+"</li>");
+   console.oldLog(arguments[0]);
+ }
+};
+
 ;(function($) { // protect script and preserve jQuery $ alias
   /* minimum height that a container should be (in px) */
   var MIN_CONTAINER_HEIGHT = 300;
@@ -96,16 +112,27 @@
   /*
    * helper function to load example file via ajax
    */
-  var loadExample = function( exampleURL ) {
+  var loadExample = function( loadData ) {
     var undefined;    // don't rely on global undefined
-    if( exampleURL !== "" && exampleURL !== "#" && 
-        exampleURL !== undefined && exampleURL !== "undefined" )
+    if( loadData !== "" && loadData !== "#" && 
+        loadData !== undefined && loadData !== "undefined" )
     {
+      loadData = loadData.split("&");
+      exampleURL = loadData[0];
+      if(loadData.length > 1) {
+        try {
+          var loadData = $.parseJSON( unescape(loadData[1]) );  // need to unescape the hash
+          restorePreferences(loadData); // replace options form with hash prefs
+        }
+        catch(e) {
+          throwErrorMessage("error1002","the URL is malformed. Could not retreive preferences.");
+        }
+      }
       /* set a message in the console */
       consoleEditor.setCode("loading example...");
   	  removeErrorMessage("error1000");
   	  
-      if( exampleURL.search("c=")===-1 ) { // no custom code was provided
+      if( exampleURL.search("c=") === -1 ) { // no custom code was provided
         /* load example file */
         $.ajax({
         	url     : exampleURL,
@@ -122,7 +149,7 @@
         	}
         });
       }
-      else {
+      else if ( exampleURL !== "" && exampleURL !== "#" ) {
         consoleEditor.setCode( unescape( exampleURL.replace("c=","") ) );
       }
     }
@@ -203,18 +230,36 @@
     }
   };
   
-  /* set up console for logging */
-  if (!window.console || !window.console.log) {
-    window.console = window.console || {};
-    window.console.log = window.console.log || function(){};
-  }
-  /* override default console.log */
-  window.console.oldLog = window.console.log;
-  window.console.log = function(){
-    if(arguments.length > 0) {
-      $("#clearlog").show("fast");
-      $("#logging").append("<li>"+arguments[0].replace(/\n/g,"<br/>")+"</li>");
-      console.oldLog(arguments[0]);
+  /*
+   * helper function to move preferences from cookies/hashes into the Options Form
+   */
+  var restorePreferences = function( saved ) {
+    if( saved.framework ) {
+      $frameworkSelector.val(saved.framework);
+    }
+    if( saved.frameworkurl ){
+      $frameworkCustomURL.val( saved.frameworkurl );
+    }
+    if( saved.apikey ){
+      $apiKey.val( saved.apikey );
+    }
+    if( saved.apiversion ) {
+      $apiVersion.val( saved.apiversion );
+    }
+    if( saved.onload ) {
+      $apiOnLoad.val( saved.onload );
+    }
+    if( saved.extensions ) {
+      $apiExtensions.val( saved.extensions );
+    }
+    if( saved.apiauth ) {
+      $apiAuth.attr("checked", saved.apiauth);
+    }
+    if( saved.apidebug ) {
+      $apiDebug.attr("checked", saved.apidebug);
+    }
+    if( saved.apicredentials ) {
+      $apiCredentials.attr("checked", saved.apicredentials);
     }
   };
   
@@ -267,33 +312,7 @@
     $apiDebug = $("#api-debug");
     
     /* restore preferences */
-    if( saved.framework ) {
-      $frameworkSelector.val(saved.framework);
-    }
-    if( saved.frameworkurl ){
-      $frameworkCustomURL.val( saved.frameworkurl );
-    }
-    if( saved.apikey ){
-      $apiKey.val( saved.apikey );
-    }
-    if( saved.apiversion ) {
-      $apiVersion.val( saved.apiversion );
-    }
-    if( saved.apionload ) {
-      $apiOnLoad.val( saved.apionload );
-    }
-    if( saved.apiextensions ) {
-      $apiExtensions.val( saved.apiextensions );
-    }
-    if( saved.apiauth ) {
-      $apiAuth.attr("checked", saved.apiauth);
-    }
-    if( saved.apidebug ) {
-      $apiDebug.attr("checked", saved.apidebug);
-    }
-    if( saved.apicredentials ) {
-      $apiCredentials.attr("checked", saved.apicredentials);
-    }
+    restorePreferences(saved);
     
     /* Hide the custom input if a framework is selected */
     toggleCustomURL();
@@ -440,7 +459,7 @@
             iframe.contentWindow.run(runCode, connectURL, params);
           }
           catch(e) {
-            throwErrorMessage("error1004","Failed to execute code via Sandbox");
+            throwErrorMessage("error1004","Failed to execute code via Sandbox\n"+e);
           }
         });
     }

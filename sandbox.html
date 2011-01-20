@@ -1,9 +1,9 @@
 <html>
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.5b1.js"></script>
+</head>
+<body>
 <script type="text/javascript">
-function run(body, url, params) {
-    
+function run(code, url, params) {
   /* build the framework script */
   var framework = document.createElement("script");
   try {
@@ -14,11 +14,16 @@ function run(body, url, params) {
   }
   framework.type = "text/javascript";
   framework.src = url;
-  
-  $("body").append(body);
+
+  // $.append() produces a weird behavior where inline <script> was appended the the end
+  //$("body").append(body);
+
+  // document.write() can result in document.body === null
+  //document.write(body);
+
+  document.body.innerHTML = code;
   document.body.appendChild(framework);
 }
 </script>
-</head>
-<body></body>
+</body>
 </html>
