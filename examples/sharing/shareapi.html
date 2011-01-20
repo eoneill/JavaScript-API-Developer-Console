@@ -1,0 +1,41 @@
+<!-- NOTE: be sure to set onLoad = onLinkedInLoad -->
+<script type="text/javascript">
+function onLinkedInLoad() {
+  IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
+  IN.Event.on(IN, "logout", function() {onLinkedInLogout();});
+}
+
+function onLinkedInLogout() {
+  // do nothing
+}
+
+function onLinkedInLogin() {
+  IN.Event.on("shareAPI", "click", doSharingTest);
+}
+
+function doSharingTest() {
+  IN.API.Raw("/people/~/shares")
+    .method("POST")
+    .body( JSON.stringify( {
+        "content": {
+          "submitted-url": "http://www.nytimes.com/2010/08/24/health/policy/24stem.html",
+          "title": "posting to share, using json",
+          "description": "U.S. Court Rules Against Stem Cell Policy",
+          "submitted-image-url": "http://www.google.com/intl/en_ALL/images/srpr/logo1w.png"
+        },
+        "visibility": {
+          "code": "anyone"
+        },
+        "comment": "this is bruce. posting to share using json"
+      })
+    )
+    .result(function(r) { 
+      alert("POST OK");
+    })
+    .error(function(r) {
+      alert("POST FAIL");
+    });
+}
+</script>
+
+<p>Sharing API Test: <a href="#" id="shareAPI">Click Here</a></p>

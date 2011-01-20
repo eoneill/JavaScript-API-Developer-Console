@@ -1,0 +1,40 @@
+<!-- NOTE: be sure to set onLoad = onLinkedInLoad -->
+<script type="text/javascript">
+function onLinkedInLoad() {
+  IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
+  IN.Event.on(IN, "logout", function() {onLinkedInLogout();});
+}
+
+function onLinkedInLogout() {
+  setLoginBadge(false);
+}
+
+function onLinkedInLogin() {
+  // we pass field selectors as a single parameter (array of strings)
+  IN.API.Profile("me")
+    .fields(["id", "firstName", "lastName", "pictureUrl", "publicProfileUrl"])
+    .result(function(result) {
+      setLoginBadge(result.values[0]);
+    })
+    .error(function(err) {
+      alert(err);
+    });
+}
+
+function setLoginBadge(profile) {
+  if (!profile) {
+    profHTML = "<p>You are not logged in</p>";
+  }
+  else {
+  profHTML = "<p><a href=\"" + profile.publicProfileUrl + "\">";
+  profHTML = profHTML + "<img align=\"baseline\" src=\"" + profile.pictureUrl + "\"></a>";      
+  profHTML = profHTML + "&nbsp; Welcome <a href=\"" + profile.publicProfileUrl + "\">";
+    profHTML = profHTML + profile.firstName + " " + profile.lastName + "</a>! <a href=\"#\" onclick=\"IN.User.logout(); return false;\">logout</a></p>";
+  }
+  document.getElementById("loginbadge").innerHTML = profHTML;
+}
+</script>
+
+<div id="loginbadge">
+  <p>Login badge renders here if the current user is authorized.</p>
+</div>

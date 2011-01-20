@@ -1,0 +1,45 @@
+<!-- NOTE: be sure to set onLoad = onLinkedInLoad -->
+<script type="text/javascript">
+function onLinkedInLoad() {
+  IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
+  IN.Event.on(IN, "logout", function() {onLinkedInLogout();});
+}
+
+function onLinkedInLogout() {
+  // do nothing
+}
+
+function onLinkedInLogin() {
+  IN.Event.on("statusAPI", "click", doStatus);
+}
+
+function doStatus() {
+  getStatus();
+  window.setTimeout(function() {
+    putStatus("This is an auto generated status for "+(new Date()).getTime());
+  }, 3000);
+}
+
+function putStatus(status) {
+  IN.API.Raw("/people/~/current-status").method("PUT")
+  .body('"'+status+'"')
+  .result(function() {
+    alert("SET OK");
+  })
+  .error(function() {
+    alert("SET FAIL");
+  });
+}
+
+function getStatus() {
+  IN.API.Raw("/people/~/current-status").method("GET")
+  .result(function(r) {
+    alert("GET STATUS: "+r);
+  })
+  .error(function(r) {
+    alert("GET FAIL");
+  });
+}
+</script>
+
+<p>Status API Test (gets, then later sets): <a href="#" id="statusAPI">Click Here</a></p>
