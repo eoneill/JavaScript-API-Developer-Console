@@ -165,7 +165,7 @@ if (!window.console || !window.console.log) {
                     value = "";
                   }
                   console.log(key);
-                  row += (key === "co0") ? value : ","+value; // only prepend a comma if its not the first column
+                  row += (key === "col0") ? value : ","+value; // only prepend a comma if its not the first column
                 });
                 result += row+"\n";                 // append newline
               });
