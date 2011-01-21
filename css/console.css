@@ -25,9 +25,9 @@ h2 { position: absolute; text-indent: -99999em; }
 #result-container { border: 1px dashed #adadad; margin-top: 10px; position: relative; }
 #sandbox { font-size: 130%; height: 350px; padding: 10px; }
 #sandbox iframe { background: transparent; border: 0; height: 100%; width: 100%; }
-ul#icons { bottom: -1px; position: absolute; right: -1px; }
-ul#icons li { cursor: pointer; float: left; squarenone outside none; margin: 2px; padding: 4px 0; position: relative; }
-ul#icons span.ui-icon { float: left; margin: 0 4px; }
+#icons { bottom: -1px; position: absolute; right: -1px; }
+#icons li { cursor: pointer; float: left; margin: 2px; padding: 4px 0; position: relative; }
+#icons span.ui-icon { float: left; margin: 0 4px; }
 
 /* SIDEBAR */
 #sidebar { float: left; width: 28%; }
@@ -38,6 +38,7 @@ ul#icons span.ui-icon { float: left; margin: 0 4px; }
 #examples .category { font-size: 14px; font-weight: bold; }
 #examples ul { list-style: none; margin: 0; padding: 0; }
 #examples ul ul { list-style: circle; margin-left: 24px; }
+#examples ul ul.no-bullet { list-style: none; }
 
 /* MESSAGES */
 .ui-state-error,
@@ -46,7 +47,6 @@ ul#icons span.ui-icon { float: left; margin: 0 4px; }
 .ui-state-highlight p { margin: 1em 0; }
 .ui-icon-alert,
 .ui-icon-info { float: left; margin-right: 0.3em; }
- { display: none; margin-top:10px; }
 /* noscript alert message, hide if JS enabled */
 .js .noscript { display: none; }
 /* message containers */
@@ -55,5 +55,3 @@ ul#icons span.ui-icon { float: left; margin: 0 4px; }
 
 /* LOGGING */
 #logging { list-style: square; }
-
-#crossdomaincontainer { display: none; }

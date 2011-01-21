@@ -205,6 +205,7 @@ if (!window.console || !window.console.log) {
     }
   };
   
+  
   /**
    * helper function to throw an error message
    * @method  throwErrorMessage
@@ -228,6 +229,7 @@ if (!window.console || !window.console.log) {
     }
   }
   
+  
   /**
    * helper function to remove an error message
    * @method  removeErrorMessage
@@ -239,6 +241,7 @@ if (!window.console || !window.console.log) {
     $errID.remove();
   }
   
+  
   /**
    * helper function to remove all error messages
    * @method  removeAllErrorMessages
@@ -247,6 +250,7 @@ if (!window.console || !window.console.log) {
   var removeAllErrorMessages = function() {
     $errorContainer.hide("fast").html("").show("fast");
   }
+  
   
   /**
    * helper function to resize containers to window
@@ -272,6 +276,7 @@ if (!window.console || !window.console.log) {
     $sandbox.height(height);
   };
   
+  
   /**
    * helper function to remove log events
    * @method  clearLog
@@ -281,6 +286,7 @@ if (!window.console || !window.console.log) {
     $("#logging").html("");
     $("#clearlog").hide("fast");
   };
+  
   
   /**
    * helper function to generate a Bit.ly URL via ajax json
@@ -303,6 +309,7 @@ if (!window.console || !window.console.log) {
       });
     }
   };
+  
   
   /**
    * helper function to move preferences from cookies/hashes into the Options Form
@@ -363,6 +370,7 @@ if (!window.console || !window.console.log) {
     }
   }
   
+  
   /*
    * Initialize Accordion Sidebar (jQuery UI)
    */
@@ -371,6 +379,7 @@ if (!window.console || !window.console.log) {
     clearStyle: true,   // this is needed to work well with dynamic content
     collapsible: true   // allow all accordions to be collapsed (for active to work right)
   });
+  
   
   /*
    * Load Framework selection via ajax
@@ -414,6 +423,7 @@ if (!window.console || !window.console.log) {
     $frameworkSelector.change( function() { toggleCustomURL("fast") } );
   });
   
+  
   /*
    * Load the list of examples via ajax
    */
@@ -433,8 +443,9 @@ if (!window.console || !window.console.log) {
     /* add event handler to load examples into code area */
     $("a:not(#load-example)",".example-group").click( function() {
       var href = $(this).attr("href");
-      loadExample( href );
       loc.hash="#"+href;
+      $("html, body").animate({scrollTop:0}, "slow");
+      loadExample( href );
       return false;
     });
     $("#load-example").click( function() {
@@ -445,11 +456,13 @@ if (!window.console || !window.console.log) {
     });
   });
   
+  
   /* stylize buttons (jQuery UI) */
   $("a", "#button-container").button();
   
   /* make the container pretty (jQuery UI)*/
   $("#container").addClass("ui-widget ui-widget-content ui-corner-all");
+  
   
   /*
    * event handler for Run click
@@ -531,11 +544,10 @@ if (!window.console || !window.console.log) {
       $sandbox.html("").append('<iframe id="sandboxrunner" src="sandbox.html">')
         .find("iframe") // bring jquery focus to iframe
         .bind("load",function(){  // attach onload event to iframe
-          var iframe = this;
-          // run the framework code
+          /* run the framework code */
           try {
             console.log("running in Sandbox...");
-            iframe.contentWindow.run(runCode, connectURL, params);
+            this.contentWindow.run(runCode, connectURL, params);  // (this) is now the iframe, thanks to jQuery magic
           }
           catch(e) {
             throwErrorMessage("error1004","Failed to execute code via Sandbox\n"+e);
@@ -548,11 +560,13 @@ if (!window.console || !window.console.log) {
     return false;
   });
   
+  
   /* event handler for Save click */
   $("#savecode").click( function() {
     console.log("feature not implemented");
     return false;
   });
+  
   
   /* event handler for Clean Up click */
   $("#cleanup").click( function() {
@@ -560,11 +574,13 @@ if (!window.console || !window.console.log) {
     return false;
   });
   
+  
   /* event handler for Clear Log click */
   $("#clearlog").click( function() {
     clearLog();
     return false;
   });
+  
   
   /* event handlers to expand and contract the sandbox */
   $("#expand-sandbox").click(function(){
@@ -583,22 +599,22 @@ if (!window.console || !window.console.log) {
     return false;
   });
   
-  /* hover state for static button (jQuery UI stuff) */
+  
+  /* hover state for static buttons (jQuery UI stuff) */
   $("#icons li").hover(
     function() { $(this).addClass("ui-state-hover"); },
   	function() { $(this).removeClass("ui-state-hover"); }
   );
   
+  
   /* set container size and bind to window resize */
   setContainerSize();
   $(window).resize( setContainerSize );
   
+  
   /* onload events */
   $(window).bind("load",function(){ // bind to onload event to prevent race-condition with CodeMirror
     /* load in an example file */
-    var hash = getExampleFromHash();
-    if(hash !== "") {
-      loadExample(hash);
-    }
+    loadExample( getExampleFromHash() );
   });
 })(jQuery); // preserve jQuery $ alias
