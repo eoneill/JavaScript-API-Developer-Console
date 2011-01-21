@@ -164,7 +164,6 @@ if (!window.console || !window.console.log) {
                   if(value === null) {
                     value = "";
                   }
-                  console.log(key);
                   row += (key === "col0") ? value : ","+value; // only prepend a comma if its not the first column
                 });
                 result += row+"\n";                 // append newline
