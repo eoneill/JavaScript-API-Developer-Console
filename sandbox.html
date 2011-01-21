@@ -15,12 +15,6 @@ function run(code, url, params) {
   framework.type = "text/javascript";
   framework.src = url;
 
-  // $.append() produces a weird behavior where inline <script> was appended the the end
-  //$("body").append(body);
-
-  // document.write() can result in document.body === null
-  //document.write(body);
-
   document.body.innerHTML = code;
   document.body.appendChild(framework);
 }
