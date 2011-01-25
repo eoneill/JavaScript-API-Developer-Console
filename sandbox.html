@@ -1,7 +1,5 @@
 <html>
 <head>
-</head>
-<body>
 <script type="text/javascript">
 function run(code, url, params) {
   /* build the framework script */
@@ -10,14 +8,19 @@ function run(code, url, params) {
     framework.appendChild( document.createTextNode(params) );
   }
   catch(e) {
-    framework.text = params;  // IE will fail with appendChild, so fall back
+    framework.text = params; // IE will fail with appendChild, so fall back
   }
   framework.type = "text/javascript";
   framework.src = url;
-
-  document.body.innerHTML = code;
+  
+  /* This method WORKS!! */
+  var div = document.createElement("div");
+  div.innerHTML = code;
+  document.body.appendChild(div);
   document.body.appendChild(framework);
+  /**/
 }
 </script>
-</body>
+</head>
+<body></body>
 </html>

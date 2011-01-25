@@ -2,32 +2,41 @@
   <li>
     <label for="framework-selector">Framework:</label>
     <div class="fieldgroup">
-      <span class="error"></span>
       <select name="framework-selector" id="framework-selector">
         <option value="http://platform.linkedin.com/in.js">Production</option>
-        <option value="http://qatest216b.qa.linkedin.com:8080/uas/in.js">QA Test</option>
+        <!--
         <option value="http://#thiserver#:8080/uas/in.js">This Server</option>
         <option value="http://localhost:8080/uas/in.js">localhost</option>
+        -->
         <option value="custom">--Custom Framework--</option>
       </select>
     </div>
   </li>
-  <li id="framework-custom">
+  <li class="framework-custom">
     <label for="framework-url-custom">Framework URL:</label>
     <div class="fieldgroup">
-      <span class="error"></span>
       <input type="text" id="framework-url-custom" name="framework-url-custom" />
     </div>
   </li>
-  <li>
+  <li class="framework-custom">
     <label for="api-key">API Key:</label>
     <div class="fieldgroup">
-      <span class="error"></span>
       <input type="text" id="api-key" name="api-key" />
     </div>
   </li>
+  <li>
+    <label for="api-options">Parameters:</label>
+    <div class="fieldgroup">
+      <textarea id="api-options" name="api-options" class="more"></textarea>
+    </div>
+  </li>
 </ul>
-[ <a href="#" class="more-link" alt="fewer options">more options</a> ]
+<!-->[ <a href="#" class="more-link" alt="fewer options">more options</a> ]
+<div class="more">
+  <textarea id="api-options" name="api-options" class="more"></textarea>
+</div>
+-->
+<!--
 <ul class="more">
   <li>
     <label for="api-version">Version:</label>
@@ -77,3 +86,4 @@
     </div>
   </li>
 </ul>
+-->
