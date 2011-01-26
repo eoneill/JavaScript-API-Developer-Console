@@ -1,5 +1,5 @@
 /* HEADERS */
-h1 { font-size: 250%; }
+h1 { font-size: 30px; }
 /* hide h2 headers */
 h2 { position: absolute; text-indent: -99999em; }
 
@@ -39,6 +39,9 @@ h2 { position: absolute; text-indent: -99999em; }
 #examples ul { list-style: none; margin: 0; padding: 0; }
 #examples ul ul { list-style: circle; margin-left: 24px; }
 #examples ul ul.no-bullet { list-style: none; }
+/* resizable textarea handle */
+#api-options { height:80px; }
+.ui-resizable-se { bottom: 13px; right: 2px; }
 
 /* MESSAGES */
 .ui-state-error,
@@ -46,12 +49,17 @@ h2 { position: absolute; text-indent: -99999em; }
 .ui-state-error p,
 .ui-state-highlight p { margin: 1em 0; }
 .ui-icon-alert,
+.ui-icon-check,
 .ui-icon-info { float: left; margin-right: 0.3em; }
 /* noscript alert message, hide if JS enabled */
 .js .noscript { display: none; }
 /* message containers */
 #error-container,
 #tiny-url-container { display: none; margin-top:10px; }
+/* success message override */
+.ui-state-success,
+.ui-widget-content .ui-state-success,
+.ui-widget-header .ui-state-success { border: 1px solid #5f9531; background: #def1ca none; }
 
 /* LOGGING */
 #logging { list-style: square; }

@@ -19,6 +19,27 @@ if (!window.console || !window.console.log) {
  */
 ;(function($, undefined) { // protect script, preserve jQuery $ alias, and don't trust global undefined
   
+  /*
+   * custom jQuery pulsing effect
+   */
+  $.fn.pulse = function(settings){
+  	settings = $.extend({
+  		duration: "medium",
+  		fadeTo: 0.7
+  	}, settings);
+		this.each(function(){
+			$(this).fadeTo(settings.duration,settings.fadeTo)
+				.fadeTo(settings.duration,1)
+				.fadeTo(settings.duration,settings.fadeTo)
+				.fadeTo(settings.duration,1)
+				.click(function(){
+					$(this).stop().fadeTo(1,1);
+				});
+		});
+		return this;
+	}
+  
+  
   /* 
    * wait until on DOMReady event
    * not entirely necessary as we are loading the script at the end of the document already,
@@ -32,8 +53,8 @@ if (!window.console || !window.console.log) {
     var EXPAND_HEIGHT = 100;        // height to expand the result bar
     var BITLY_USER = "eoneill";     // Bit.ly API settings
     var BITLY_KEY = "R_4f1d96e89bee1a8d88edb114dd0c1e4b";
-    
-    var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5";
+    var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5"; // LinkedIn API Key
+    var PROD_OPTIONS = { authorize:false, credentials_cookie:false, api_key:false }; // Default, enforced, options for Production framework
     
     /*
      * cache some DOM elements
@@ -61,8 +82,8 @@ if (!window.console || !window.console.log) {
 
     /* a few global-esque vars */
     var originalCode = "";  // used to compare if code changes occured
-    var saved = {}; // use this to hold cookies/preferences
-
+    var saved = {};         // use this to hold cookies/preferences
+    var lastURL = "";       // URL last used with bit.ly
 
     /* create CodeMirror editor */
     var consoleEditor = CodeMirror.fromTextArea("code-console", {
@@ -72,23 +93,171 @@ if (!window.console || !window.console.log) {
       path      : "js/codemirror/"
     });
     var $codeMirror = $(".CodeMirror-wrapping", "#console-container");
+    
+    
+    
+    var parseOptions = function( allowBadOnLoad ) {
+      var options = $apiOptions.val();
+      var newOptions = "";
+      var processed = [];
+      
+      if( saved.extendapioptions ) {
+        /* append extended options */
+        options = options + "\n" + saved.extendapioptions;
+      }
+      
+      if( options !== "" ) {
+        options = options.split("\n");
+        $.each( options, function(key, value) {
+          if( value !== "" ) {
+            var temp = value.replace(/\s+/gi,"").split(":"); // removes whitespace and splits into key:value pairs
+            var skip = false;
+            /*
+             * These rules might be a bit confusing, priority matters
+             *  (1) if a parameter has already been included, don't include it again
+             *      - we don't want duplicate parameters
+             *  (2) user parameters should take precedence over example specific parameters
+             *      - the exception is when an onLoad parameter is defined, but the onLoad function
+             *       is not defined within the code body
+             *       (this will prevent errors while switching between examples that override onLoad)
+             *      - this exception is ignored when
+             *  (3) if the user selected the Production framework, enforce some default values
+             *      - authorize: false
+             *      - credentials_cookie: false
+             */
+            if( processed[ temp[0] ] !== undefined ) {            // rule(1)
+              skip = true;
+            }
+            else if( temp[0] === "onLoad" ) {                     // exception for rule(2)
+              /* be nice, clean up unused onLoad params */
+              processed[temp[0]] = true;
+              if( !allowBadOnLoad ) {
+                if( consoleEditor.getCode().search(temp[1]) === -1 ) {
+                  skip = true;
+                  throwErrorMessage("badonload", "an unused onLoad event '"+temp[1]+"' was removed from the parameters", "highlight");
+                  processed[temp[0]] = false;
+                }
+              }
+            }
+            else if( $frameworkSelector.val() !== "custom" ) {    // rule(3)
+              /* using production framework, apply overrides */
+              if( PROD_OPTIONS[ temp[0] ] !== undefined ) {
+                processed[temp[0]] = true;
+                skip = true;
+              }
+            }
+            else {
+              processed[temp[0]] = true;
+            }
+          
+            if( !skip ) {
+              newOptions += temp[0] + ": " + temp[1] + "\n";
+            }
+            else {
+              console.log("dropping parameter: ("+temp[0]+": "+temp[1]+")");
+            }
+          }
+        });
+      }
+      $apiOptions.val( newOptions );
+    };
 
 
     /**
      * helper function to reset the environment
      *  this helps ensure that subsequent runs will work properly
      * @method  cleanUpEnvironment
+     * @param   {Boolean} hideTinyURL trigger hiding of the generated URL
      * @return  void
      */
-    var cleanUpEnvironment = function() {
+    var cleanUpEnvironment = function( hideTinyURL ) {
       /* remove generated sandbox */
       $("iframe","#sandbox").remove();
 
-      /* hide previous TinyURL */
-      $tinyURLContainer.hide("fast");
-
+      if( hideTinyURL ) {
+        /* hide previous TinyURL */
+        $tinyURLContainer.hide("fast");
+      }
+      else {
+        $tinyURLContainer.pulse( {duration: "fast"} );
+      }
       /* remove previous error messages */
       removeAllErrorMessages();
+    };
+    
+    
+    /**
+     * helper function to execute the request
+     * @method  executeCode
+     * @return  void
+     */
+    var executeCode = function() {
+      parseOptions( true );   // ensure that option rules are enforced
+      
+      var doTinyURL;
+      var connectURL = $frameworkSelector.val();
+      var apiOptions = $apiOptions.val();
+      var apiKey = $apiKey.val();
+      /* store preferences in JSON formatted string */
+      var preferences = '{'
+            +'"framework":"'+$frameworkSelector.val()+'",'
+            +'"frameworkurl":"'+$frameworkCustomURL.val()+'",'
+            +'"apikey":"'+apiKey+'",'
+            +'"apioptions":"'+apiOptions.replace(/\n/g,"\\n")+'"' // we need to escape newlines for valid JSON
+          +'}';
+      if(connectURL !== "custom") {
+        apiKey = CONNECT_API_KEY;
+      }
+      var params = "api_key: "+apiKey+"\n"+apiOptions;
+
+      var runCode = consoleEditor.getCode();
+      var exampleData = getExampleFromHash();
+
+      /* save settings to cookie (as JSON) */
+      $.cookie( "apiconsole", preferences, { path: '/', expires: 365 } );
+
+      if(runCode != originalCode) {
+        exampleData = "c="+escape(runCode);
+      }
+      loc.hash = "#" + exampleData + "&" + preferences;
+      
+      doTinyURL = (loc.href !== lastURL);
+      
+      cleanUpEnvironment( doTinyURL );
+
+      /* generate a TinyURL */
+      if(doTinyURL) {
+        getTinyURL(loc.href, function(tinyurl){
+          $tinyURL.text(tinyurl).attr("href",tinyurl);
+          $tinyURLContainer.show("fast");
+        });
+      }
+
+      /* was a custom URL provided? */
+      if(connectURL === "custom") {
+        connectURL = $frameworkCustomURL.val();
+        if(connectURL === "") {
+          connectURL = $("option", $frameworkSelector).first().val();
+        }
+      }
+
+      /* build the sandbox iframe */
+      try {
+        $sandbox.html("").append('<iframe id="sandboxrunner" src="sandbox.html">')
+          .find("iframe") // bring jquery focus to iframe
+          .bind("load",function(){  // attach onload event to iframe
+            /* run the framework code */
+            try {
+              this.contentWindow.run(runCode, connectURL, params);  // (this) is now the iframe, thanks to jQuery magic
+            }
+            catch(e) {
+              throwErrorMessage("error1004","Failed to execute code via Sandbox\n"+e);
+            }
+          });
+      }
+      catch(e) {
+        throwErrorMessage("error1003","Failed to inject Framework\n"+e);
+      }
     };
 
 
@@ -137,11 +306,16 @@ if (!window.console || !window.console.log) {
       if( loadData !== "" && loadData !== "#" && 
           loadData !== undefined && loadData !== "undefined" )
       {
+        saved.extendapioptions = undefined;
+        
         loadData = loadData.split("&");
         exampleURL = loadData[0];
         if(loadData.length > 1) {
           try {
-            var loadData = $.parseJSON( unescape(loadData[1]) );  // need to unescape the hash
+            loadData = $.parseJSON( unescape(loadData[1]) );  // need to unescape the hash
+            if(loadData.extendapioptions) {
+              saved.extendapioptions = loadData.extendapioptions;
+            }
             restorePreferences(loadData); // replace options form with hash prefs
           }
           catch(e) {
@@ -151,6 +325,7 @@ if (!window.console || !window.console.log) {
         /* set a message in the console */
         consoleEditor.setCode("loading example...");
     	  removeErrorMessage("error1000");
+    	  removeErrorMessage("badonload");
 
         if( exampleURL.search("c=") === -1 ) { // no custom code was provided
           if( exampleURL.match(/(https?|ftp):\/\/.+/) ) {
@@ -159,7 +334,7 @@ if (!window.console || !window.console.log) {
             $.getJSON(exampleURL, function(data){
               if(data.query.count !== "0") {
                 /*
-                  now that we have the CSV returned as JSON, we need 
+                  now that we have the CSV returned as JSON, we need
                   to parse it and recombine the rows and columns
                 */
                 var rows = data.query.results.row;    // rows of data
@@ -167,9 +342,7 @@ if (!window.console || !window.console.log) {
                 $.each(rows, function(k, cols){       // loop through each row and append a newline \n
                   var row = "";
                   $.each(cols, function(key, value){    // loop through each column and prepend a comma
-                    if(value === null) {
-                      value = "";
-                    }
+                    value = value || "";    // takes care of the case when value === null (an empty line)
                     row += (key === "col0") ? value : ","+value; // only prepend a comma if its not the first column
                   });
                   result += row+"\n";                 // append newline
@@ -177,6 +350,8 @@ if (!window.console || !window.console.log) {
                 /* write example to console */
                 consoleEditor.setCode(result);
             	  originalCode = result;
+            	  /* clean up options */
+            	  parseOptions();
             	}
             	else {
             	  /* throw an error message on failure */
@@ -192,6 +367,8 @@ if (!window.console || !window.console.log) {
             	  /* write example to console on success */
             	  consoleEditor.setCode(data);
             	  originalCode = data;
+            	  /* clean up options */
+            	  parseOptions();
             	},
             	error   : function(xhr, status, e) {
             	  /* throw an error message on failure */
@@ -205,6 +382,8 @@ if (!window.console || !window.console.log) {
         }
         else if ( exampleURL !== "" && exampleURL !== "#" ) {
           consoleEditor.setCode( unescape( exampleURL.replace("c=","") ) );
+          /* clean up options */
+      	  parseOptions();
         }
       }
     };
@@ -221,15 +400,21 @@ if (!window.console || !window.console.log) {
     var throwErrorMessage = function( id, message, type ) {
       type = type || "error";
       var $errID = $("#"+id, $errorContainer);
-      var errType = type === "highlight" ? "Warning: " : "Error: ";
-      var iconType = type === "highlight" ? "info" : "alert";
+      var errType = "Error: ";
+      var iconType = "alert";
+      if( type === "highlight" ) {
+        errType = "Warning: ";
+        iconType = "info";
+      }
       console.log(errType+message);
       $errorContainer.show("fast");
       if( $errID.length > 0 ) {
         $(".error-message", $errID).html(message);
+        $errID.pulse();
       }
       else {
-        $errorContainer.append('<div class="ui-widget" id="'+id+'"><div class="ui-state-'+type+' ui-corner-all"><p><span class="ui-icon ui-icon-'+iconType+'"></span><strong>'+errType+'</strong><span class="error-message">'+message.replace(/\n/g,"<br/>")+'</span></p></div></div>');
+        $errorContainer.append('<div class="ui-widget" id="'+id+'" style="display:none;"><div class="ui-state-'+type+' ui-corner-all"><p><span class="ui-icon ui-icon-'+iconType+'"></span><strong>'+errType+'</strong><span class="error-message">'+message.replace(/\n/g,"<br/>")+'</span></p></div></div>')
+          .find("#"+id).fadeIn("fast");
       }
     }
 
@@ -251,7 +436,7 @@ if (!window.console || !window.console.log) {
      * @return  void
      */
     var removeAllErrorMessages = function() {
-      $errorContainer.hide("fast").html("").show("fast");
+      $errorContainer.hide("fast").html("").show();
     }
 
 
@@ -298,6 +483,7 @@ if (!window.console || !window.console.log) {
      * @param   {Function} success function to invoke on success
      */
     var getTinyURL = function( longURL, success ) {
+      lastURL = longURL;
       var URL = "http://api.bit.ly/v3/shorten?"
                 +"login="+BITLY_USER
                 +"&apiKey="+BITLY_KEY
@@ -307,7 +493,7 @@ if (!window.console || !window.console.log) {
     	  throwErrorMessage("error1005","Short URL cannot be generated. Potential loss of data due to URL length limitations. Consider creating an example file.","highlight");
     	}
     	else {
-    	  $.getJSON(URL, function(data){
+    	  $.getJSON(URL, function( data ){
           success && success(data.data.url);
         });
       }
@@ -315,7 +501,7 @@ if (!window.console || !window.console.log) {
 
 
     /**
-     * helper function to move preferences from cookies/hashes into the Options Form
+     * helper function to move preferences from cookie/hash into the Options Form
      * @method  restorePreferences
      * @param   {Object} saved preferences to be restored
      * @return  void
@@ -328,7 +514,7 @@ if (!window.console || !window.console.log) {
         $frameworkCustomURL.val( saved.frameworkurl );
       }
       if( saved.apioptions ) {
-        $apiOptions.val( saved.apioptions/*.replace("||","\n")*/ );
+        $apiOptions.val( saved.apioptions );
       }
       if( saved.apikey ){
         $apiKey.val( saved.apikey );
@@ -360,7 +546,6 @@ if (!window.console || !window.console.log) {
         }
       }
     }
-
 
     /*
      * Initialize Accordion Sidebar (jQuery UI)
@@ -394,6 +579,10 @@ if (!window.console || !window.console.log) {
 
       /* toggle the custom input when needed */
       $frameworkSelector.change( function() { toggleCustomURL("fast") } );
+      
+      /* make the options textarea resizeable */
+      $apiOptions.resizable({ handles: "se" });
+      
     });
 
 
@@ -429,7 +618,6 @@ if (!window.console || !window.console.log) {
       });
     });
 
-
     /* stylize buttons (jQuery UI) */
     $("a", "#button-container").button();
 
@@ -441,65 +629,7 @@ if (!window.console || !window.console.log) {
      * event handler for Run click
      */
     $("#runcode").click( function() {
-      var connectURL = $frameworkSelector.val();
-      var apiOptions = $apiOptions.val();
-      var apiKey = $apiKey.val();
-      /* store preferences in JSON formatted string */
-      var preferences = '{'
-            +'"framework":"'+$frameworkSelector.val()+'",'
-            +'"frameworkurl":"'+$frameworkCustomURL.val()+'",'
-            +'"apikey":"'+apiKey+'",'
-            +'"apioptions":"'+apiOptions.replace("\n","\\n")+'"'
-          +'}';
-      if(connectURL !== "custom") {
-        apiKey = CONNECT_API_KEY;
-      }
-      var params = "api_key: "+apiKey+"\n"+apiOptions;
-
-      var runCode = consoleEditor.getCode();
-      var exampleData = getExampleFromHash();      
-
-      cleanUpEnvironment();
-
-      /* save settings to cookie (as JSON) */
-      $.cookie( "apiconsole", preferences, { path: '/', expires: 365 } );
-
-      if(runCode != originalCode) {
-        exampleData = "c="+escape(runCode);
-      }
-      loc.hash = "#" + exampleData + "&" + preferences;
-
-      /* generate a TinyURL */
-      getTinyURL(loc.href, function(tinyurl){
-        $tinyURL.text(tinyurl).attr("href",tinyurl);
-        $tinyURLContainer.show("fast");
-      });
-
-      /* was a custom URL provided? */
-      if(connectURL === "custom") {
-        connectURL = $frameworkCustomURL.val();
-        if(connectURL === "") {
-          connectURL = $("option", $frameworkSelector).first().val();
-        }
-      }
-
-      /* build the sandbox iframe */
-      try {
-        $sandbox.html("").append('<iframe id="sandboxrunner" src="sandbox.html">')
-          .find("iframe") // bring jquery focus to iframe
-          .bind("load",function(){  // attach onload event to iframe
-            /* run the framework code */
-            try {
-              this.contentWindow.run(runCode, connectURL, params);  // (this) is now the iframe, thanks to jQuery magic
-            }
-            catch(e) {
-              throwErrorMessage("error1004","Failed to execute code via Sandbox\n"+e);
-            }
-          });
-      }
-      catch(e) {
-        throwErrorMessage("error1003","Failed to inject Framework\n"+e);
-      }
+      executeCode();
       return false;
     });
 
@@ -526,13 +656,13 @@ if (!window.console || !window.console.log) {
 
 
     /* event handlers to expand and contract the sandbox */
-    $("#expand-sandbox").click(function(){
+    $("#expand-sandbox").click( function(){
       $contractSandbox.show("fast");
       $sandbox.height( $sandbox.height()+EXPAND_HEIGHT );
       $("html, body").animate({scrollTop: $sandbox.height()}, "slow");
       return false;
     });
-    $contractSandbox.click(function(){
+    $contractSandbox.click( function(){
       var height = $sandbox.height()-EXPAND_HEIGHT;
       if( height <= MIN_CONTAINER_HEIGHT ) {
         height = MIN_CONTAINER_HEIGHT;
