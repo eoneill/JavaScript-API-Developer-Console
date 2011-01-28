@@ -1,3 +1,4 @@
+<!-- NOTE: be sure to set onLoad: onLinkedInLoad -->
 <script type="text/javascript">
 function onLinkedInLoad() {
   IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
@@ -19,17 +20,17 @@ function onLinkedInLogin() {
 
 function setConnections(connections) {
   var connHTML = "<ul>";
-
-  for (id in connections.values) {
+  for (id in connections) {
+    console.log(id);
     connHTML = connHTML + "<li><a href=\"" + connections[id].publicProfileURL + "\">";
-
+    
     /* picture url not always there, must be defensive */
     if (connections[id].hasOwnProperty('pictureUrl')) {
       connHTML = connHTML + "<img align=\"baseline\" src=\"" + connections[id].pictureUrl + "\"></a>";
     }  else {
-      connHTML = connHTML + "<img align=\"baseline\" src=\"" + connectNoPicture_url + "\"></a>";
+      connHTML = connHTML + "<img align=\"baseline\" src=\"http://static02.linkedin.com/scds/common/u/img/icon/icon_no_photo_80x80.png\"></a>";
     }
-
+    
     connHTML = connHTML + "&nbsp;<a href=\"" + connections[id].publicProfileUrl + "\">";
     connHTML = connHTML + connections[id].firstName + " " + connections[id].lastName + "</a>";
     connHTML = connHTML + " (memberToken: " + connections[id].id + ")</li>";
@@ -40,8 +41,11 @@ function setConnections(connections) {
   document.getElementById("connectionsdata").innerHTML = connHTML;
 }
 </script>
+<script type="IN/Login">
 
 <div id="connectionstest">
   <p>Current User's Connections:</p>
   <div id="connectionsdata"></div>
 </div>
+
+</script>

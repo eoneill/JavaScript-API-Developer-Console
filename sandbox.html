@@ -1,26 +1,11 @@
 <html>
 <head>
-<script type="text/javascript">
-function run(code, url, params) {
-  /* build the framework script */
-  var framework = document.createElement("script");
-  try {
-    framework.appendChild( document.createTextNode(params) );
-  }
-  catch(e) {
-    framework.text = params; // IE will fail with appendChild, so fall back
-  }
-  framework.type = "text/javascript";
-  framework.src = url;
-  
-  /* This method WORKS!! */
-  var div = document.createElement("div");
-  div.innerHTML = code;
-  document.body.appendChild(div);
-  document.body.appendChild(framework);
-  /**/
-}
-</script>
 </head>
-<body></body>
+<body>
+<script type="text/javascript">
+// get the html to write from the parent, and document.write it
+// this might well be the only time document.write is acceptable
+document.write(parent.getSandboxHtml());
+</script>
+</body>
 </html>

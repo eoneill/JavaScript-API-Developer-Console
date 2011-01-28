@@ -1,4 +1,4 @@
-<!-- NOTE: be sure to set onLoad = onLinkedInLoad -->
+<!-- NOTE: be sure to set onLoad: onLinkedInLoad -->
 <script type="text/javascript">
 function onLinkedInLoad() {
   IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
@@ -26,14 +26,17 @@ function setLoginBadge(profile) {
     profHTML = "<p>You are not logged in</p>";
   }
   else {
-  profHTML = "<p><a href=\"" + profile.publicProfileUrl + "\">";
-  profHTML = profHTML + "<img align=\"baseline\" src=\"" + profile.pictureUrl + "\"></a>";      
-  profHTML = profHTML + "&nbsp; Welcome <a href=\"" + profile.publicProfileUrl + "\">";
+    profHTML = "<p><a href=\"" + profile.publicProfileUrl + "\">";
+    profHTML = profHTML + "<img align=\"baseline\" src=\"" + profile.pictureUrl + "\"></a>";      
+    profHTML = profHTML + "&nbsp; Welcome <a href=\"" + profile.publicProfileUrl + "\">";
     profHTML = profHTML + profile.firstName + " " + profile.lastName + "</a>! <a href=\"#\" onclick=\"IN.User.logout(); return false;\">logout</a></p>";
   }
   document.getElementById("loginbadge").innerHTML = profHTML;
 }
 </script>
+
+<!-- need to be logged in to use; if not, offer a login button -->
+<script type="IN/Login"></script>
 
 <div id="loginbadge">
   <p>Login badge renders here if the current user is authorized.</p>
