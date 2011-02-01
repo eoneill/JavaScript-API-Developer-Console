@@ -43,6 +43,7 @@ $.fn.pulse = function(settings){
 //  but better safe than sorry
 // ----------------------------------------------------------------------------------------------------
 $(function() {
+
 //  Some constants
 var MIN_CONTAINER_HEIGHT = 300; //minimum height that a container should be (in px) 
 var EXPAND_HEIGHT = 100;        // height to expand the result bar
@@ -73,6 +74,7 @@ var $frameworkCustom;
 var $frameworkCustomURL;
 var $apiOptions;
 var $apiKey;
+var $includeButtons;
 
 // a few global-esque vars */
 var originalCode = "";  // used to compare if code changes occured
@@ -236,7 +238,8 @@ var executeCode = function() {
         +'"framework":"'+$frameworkSelector.val()+'",'
         +'"frameworkurl":"'+$frameworkCustomURL.val()+'",'
         +'"apikey":"'+apiKey+'",'
-        +'"apioptions":"'+apiOptions.replace(/\n/g,"\\n")+'"' // we need to escape newlines for valid JSON
+        +'"apioptions":"'+apiOptions.replace(/\n/g,"\\n")+'",'  // we need to escape newlines for valid JSON
+        +'"sessionbuttons":'+$includeButtons.is(":checked")     // note: this is boolean, no quotes
       +'}';
   if(connectURL !== "custom") {
     apiKey = CONNECT_API_KEY;
@@ -256,7 +259,7 @@ var executeCode = function() {
   doTinyURL = tinyURLs[loc.href];
   
   cleanUpEnvironment( doTinyURL !== undefined );
-
+  
   // generate a TinyURL
   if(doTinyURL === undefined) {
     getTinyURL(loc.href, function(tinyurl){
@@ -268,7 +271,7 @@ var executeCode = function() {
   else {
     $tinyURL.text(doTinyURL).attr("href",doTinyURL);
   }
-
+  
   // was a custom URL provided?
   if(connectURL === "custom") {
     connectURL = $frameworkCustomURL.val();
@@ -276,9 +279,13 @@ var executeCode = function() {
       connectURL = $("option", $frameworkSelector).first().val();
     }
   }
-
+  
   // build the sandbox iframe
   try {
+    if($includeButtons.is(":checked")) {
+      var style = "border: 1px dashed #adadad; border-bottom:0; position:fixed; right:60px; bottom:0; padding:10px 10px 0 10px";
+      runCode += '<div style="'+style+'"><scr'+'ipt type="IN/Login">[ <a href="#" onclick="IN.User.logout(); return false;">logout</a> ]</scr'+'ipt></div>';
+    }
     // set a window function that will give us the HTML for the sandbox
     // it gets overwritten on each run
     window.getSandboxHtml = function getSandboxHtml() {
@@ -547,6 +554,10 @@ var restorePreferences = function( saved ) {
   if( saved.apikey ){
     $apiKey.val( saved.apikey );
   }
+  if( saved.sessionbuttons ){
+    $includeButtons.attr("checked", saved.sessionbuttons);
+  }
+  
 };
 
 // Actual Execution begins here
@@ -590,6 +601,7 @@ $("#framework").load( "frameworks.html", function() {
   $codeConsole = $("#code-console");
   $apiOptions = $("#api-options");
   $apiKey = $("#api-key");
+  $includeButtons = $("#include-buttons");
 
   // restore preferences
   restorePreferences(saved);
@@ -717,5 +729,5 @@ $(window).resize( setContainerSize );
 setTimeout(tryLoadExample, 20);
 
 });   // END wait for on DOMReady
-  
+
 })(jQuery); // END preserve jQuery $ alias

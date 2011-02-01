@@ -42,7 +42,6 @@ h2 { position: absolute; text-indent: -99999em; }
 /* resizable textarea handle */
 #api-options { height:80px; }
 .ui-resizable-se { bottom: 14px; right: 3px; }
-#api-options-container .ui-wrapper { margin: 0 !important; }
 
 /* MESSAGES */
 .ui-state-error,

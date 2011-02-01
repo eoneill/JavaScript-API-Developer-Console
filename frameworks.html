@@ -4,10 +4,6 @@
     <div class="fieldgroup">
       <select name="framework-selector" id="framework-selector">
         <option value="http://platform.linkedin.com/in.js">Production</option>
-        <!--
-        <option value="http://#thiserver#:8080/uas/in.js">This Server</option>
-        <option value="http://localhost:8080/uas/in.js">localhost</option>
-        -->
         <option value="custom">--Custom Framework--</option>
       </select>
     </div>
@@ -30,60 +26,10 @@
       <textarea id="api-options" name="api-options" class="more"></textarea>
     </div>
   </li>
-</ul>
-<!--[ <a href="#" class="more-link" alt="fewer options">more options</a> ]
-<div class="more">
-  <textarea id="api-options" name="api-options" class="more"></textarea>
-</div>
--->
-<!--
-<ul class="more">
   <li>
-    <label for="api-version">Version:</label>
-    <div class="fieldgroup">
-      <span class="error"></span>
-      <select id="api-version" name="api-version">
-        <option value="stable">Current Stable</option>
-        <option value="rc">Release Candidate</option>
-        <option value="legacy">Legacy</option>
-        <option value="none">--None--</option>
-      </select>
-    </div>
-  </li>
-  <li>
-    <label for="api-onload">onLoad:</label>
-    <div class="fieldgroup">
-      <span class="error"></span>
-      <input type="text" id="api-onload" name="api-onload" />
-    </div>
-  </li>
-  <li>
-    <label for="api-onload">Extensions:</label>
-    <div class="fieldgroup">
-      <span class="error"></span>
-      <input type="text" id="api-extensions" name="api-extensions" />
-    </div>
-  </li>
-  <li>
-    <label for="api-credentials" class="inline">Credentials Cookie:</label>
+    <label for="include-buttons" class="inline">Session Buttons:</label>
     <div class="fieldgroup inline">
-      <span class="error"></span>
-      <input type="checkbox" id="api-credentials" name="api-credentials" />
-    </div>
-  </li>
-  <li>
-    <label for="api-auth" class="inline">Authorize:</label>
-    <div class="fieldgroup inline">
-      <span class="error"></span>
-      <input type="checkbox" id="api-auth" name="api-auth" />
-    </div>
-  </li>
-  <li>
-    <label for="api-debug" class="inline">Debug:</label>
-    <div class="fieldgroup inline">
-      <span class="error"></span>
-      <input type="checkbox" id="api-debug" name="api-debug" />
+      <input type="checkbox" id="include-buttons" name="include-buttons" title="include Login/Logout buttons" />
     </div>
   </li>
 </ul>
--->
