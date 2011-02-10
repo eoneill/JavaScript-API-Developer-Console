@@ -1,3 +1,5 @@
+<p>This example demonstrates how to retrieve a user's connections.  It also uses the LinkedIn auth events (load, login, logout) to control behavior.</p>
+
 <!-- NOTE: be sure to set onLoad: onLinkedInLoad -->
 <script type="text/javascript">
 function onLinkedInLoad() {
@@ -41,7 +43,9 @@ function setConnections(connections) {
   document.getElementById("connectionsdata").innerHTML = connHTML;
 }
 </script>
+<script type="IN/Login">
 <div id="connectionstest">
   <p>Current User's Connections:</p>
-  <div id="connectionsdata">Log in to see your connections.</div>
+  <div id="connectionsdata"></div>
 </div>
+</script>
