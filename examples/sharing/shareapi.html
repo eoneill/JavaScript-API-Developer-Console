@@ -18,15 +18,15 @@ function doSharingTest() {
     .method("POST")
     .body( JSON.stringify( {
         "content": {
-          "submitted-url": "http://www.nytimes.com/2010/08/24/health/policy/24stem.html",
-          "title": "posting to share, using json",
-          "description": "U.S. Court Rules Against Stem Cell Policy",
-          "submitted-image-url": "http://www.google.com/intl/en_ALL/images/srpr/logo1w.png"
+          "submitted-url": "http://developer.linkedinlabs.com/jsapi-console",
+          "title": "JSAPI Console",
+          "description": "JSAPI Developer Console",
+          "submitted-image-url": "http://developer.linkedin.com/servlet/JiveServlet/downloadImage/102-1101-13-1003/30-25/LinkedIn_Logo30px.png"
         },
         "visibility": {
           "code": "anyone"
         },
-        "comment": "this is bruce. posting to share using json"
+        "comment": "This is a test posting from the LinkedIn JSAPI Console"
       })
     )
     .result(function(r) { 
@@ -37,4 +37,5 @@ function doSharingTest() {
     });
 }
 </script>
+<p>This example will allow you to share a link on LinkedIn, using the raw REST API.  Note that this action will add a share to your network feed (the post will be live).</p>
 <p>Sharing API Test: <a href="#" id="shareAPI">Click Here</a></p>
