@@ -129,8 +129,7 @@ var tryLoadExample = function() {
       do {
         $category = $(".example-group:random", "#examples");
       } while ( !$category.is(",.load-url") );
-      $category.show()    // open a random Category, but not the Load from URL
-          .find("a:random").click();           // select a random example from the open category
+      $category.show().find("a:random").click();  // select a random example from the open category
     }
   }
   catch(e) {
