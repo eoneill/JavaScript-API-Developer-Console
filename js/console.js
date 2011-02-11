@@ -125,7 +125,11 @@ var tryLoadExample = function() {
     }
     else {
       // load a random example
-      $(".example-group:not(.load-url):random", "#examples").show()    // open a random Category, but not the Load from URL
+      var $category;
+      do {
+        $category = $(".example-group:random", "#examples");
+      } while ( !$category.is(",.load-url") );
+      $category.show()    // open a random Category, but not the Load from URL
           .find("a:random").click();           // select a random example from the open category
     }
   }
