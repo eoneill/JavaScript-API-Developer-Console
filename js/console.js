@@ -256,6 +256,9 @@ var cleanUpEnvironment = function( dontHideTinyURL ) {
 var executeCode = function( allowBadOnLoad ) {
   parseOptions( allowBadOnLoad );   // ensure that option rules are enforced
   
+  // fix inconsistent loc.protocol (some browsers will return "http", others return "http:")
+  var protocol = loc.protocol.replace(/\:/g,"") + "://";
+  
   var doTinyURL;
   var connectURL = $frameworkSelector.val();
   var apiOptions = $apiOptions.val();
@@ -313,8 +316,11 @@ var executeCode = function( allowBadOnLoad ) {
   if(connectURL === "custom") {
     connectURL = $frameworkCustomURL.val();
     if(connectURL === "") {
-      connectURL = $("option", $frameworkSelector).first().val();
+      connectURL = protocol + $("option", $frameworkSelector).first().val();
     }
+  }
+  else {
+    connectURL = protocol + connectURL;
   }
   
   // build the sandbox iframe
