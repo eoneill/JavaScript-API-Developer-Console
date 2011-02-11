@@ -5,7 +5,7 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 
 #header { background: url("../images/li_dev_header_bg.png") repeat-x 0% 100%; width: auto; border-bottom: 1px solid #CCC; height: 39px; margin: 10px auto 15px; }
 #header-texture { background: none; font-size: 250%; left: 0px; padding: 0px; top: -8px; position: relative; width: 836px; display: block; }
-#subheader { overflow: hidden; }
+#subheader { overflow: hidden; width: 100%; }
 
 #wrapper { margin: 0 10px; min-width: 840px; }
 
