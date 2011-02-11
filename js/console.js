@@ -61,8 +61,8 @@ var MIN_CONTAINER_HEIGHT = 260; //minimum height that a container should be (in 
 var EXPAND_HEIGHT = 100;        // height to expand the result bar
 var BITLY_USER = "eoneill";     // Bit.ly API settings
 var BITLY_KEY = "R_4f1d96e89bee1a8d88edb114dd0c1e4b";
-//var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5"; // LinkedIn Labs' API Key
-var CONNECT_API_KEY = "rCmYw5qSiBcSGJq9E93QAt-S_TS1NvOAbyLowao1ByvQpkxF9A8ahxSzrjsKZmCk"; // Eugene's API Key
+var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5"; // LinkedIn Labs' API Key
+//var CONNECT_API_KEY = "rCmYw5qSiBcSGJq9E93QAt-S_TS1NvOAbyLowao1ByvQpkxF9A8ahxSzrjsKZmCk"; // Eugene's API Key
 //var CONNECT_API_KEY = "RKOTRRRAOquK5xqdWJyVp8LW704mgwovmD1FUzOif5R61XGRyfW_X_2pJgt_fIjo"; // K's API Key
 //var PROD_OPTIONS = { authorize:true, credentials_cookie:false, api_key:false }; // Default, enforced, options for Production framework
 
