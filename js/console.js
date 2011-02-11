@@ -37,18 +37,6 @@ $.fn.pulse = function(settings){
   return this;
 };
 
-// custom jQuery selector filter (:random)
-// selects a random element from a collection
-$.rand = 0;
-$.extend($.expr[":"], {
-  random: function(a, i, m, r) {
-    if (i === 0) {
-      $.rand = Math.floor(Math.random() * r.length);
-    }
-    return i === $.rand;
-  }
-});
-
 // ----------------------------------------------------------------------------------------------------
 // wait until on DOMReady event
 //  not entirely necessary as we are loading the script at the end of the document already,
@@ -137,9 +125,9 @@ var tryLoadExample = function() {
       }
     }
     else {
-      // load a random example
-      $(".example-group:random:not(.load-url)", "#examples").show()   // open a category
-        .find("a:random").click();                                    // select a random example from the open category
+      // load the first example
+      $(".example-group:eq(0)", "#examples").show()   // open a category
+        .find("a:eq(0)").click();                                    // select a random example from the open category
     }
   }
   catch(e) {
