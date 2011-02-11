@@ -1,0 +1,38 @@
+/* *****************
+ *  LI reset.css   *
+ ***************** */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td { margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline; }
+ol,ul { list-style:none; }
+table { border-collapse:separate;border-spacing:0; }
+caption,th,td { text-align:left;font-weight:normal; }
+blockquote:before,blockquote:after,q:before,q:after { content:""; }
+blockquote,q { quotes:"" ""; }
+
+/* *****************
+ *  LI default.css *
+ ***************** */
+html { overflow-y:scroll;margin:0;padding:0;border:0;outline:0; }
+body { font:62.5%/1.2 Arial,Helvetica,"Nimbus Sans L",sans-serif;color:#000;margin:0;padding:0;border:0;outline:0; }
+hr { display:none; }
+strong { font-weight:bold; }
+abbr,acronym { border:none; }
+img { border:none; }
+a { text-decoration:none;color:#069;outline:none; }
+a:hover { text-decoration:underline; }
+a:visited { color:#069; }
+input,select,textarea,button { font-family:Arial,Helvetica,"Nimbus Sans L",sans-serif; }
+
+/* *****************
+ *  LI forms.css   *
+ ***************** */
+.standard-form ul { margin:0;padding-top:10px;list-style-type:none; }
+.standard-form .fieldgroup { margin:0 0 0 195px;_margin-left:198px;padding:0; }
+.standard-form li { margin-bottom:10px; }
+.standard-form li:after { content:".";display:block;height:0;clear:both;visibility:hidden; }
+.standard-form { margin:20px 40px; }
+.standard-form label { font-size:130%;color:#333;background-color:transparent;font-weight:bold;display:block;float:left;text-align:right;width:185px;margin-right:10px; }
+.standard-form .fieldgroup.checkbox input { float:left; }
+.standard-form input,.standard-form select,.standard-form textarea { font-size:130%; }
+.standard-form.stacked { margin:0 10px; }
+.standard-form.stacked label { float:none;text-align:left;line-height:1.5; }
+.standard-form.stacked .fieldgroup { margin-left:0; }
