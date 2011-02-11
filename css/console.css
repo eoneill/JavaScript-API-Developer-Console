@@ -1,22 +1,26 @@
 /* HEADERS */
-h1 { font-size: 30px; padding: 5px; padding-left: 10px; margin-top: -30px;}
+h1 { float: left; font-size: 30px; padding: 5px; padding-left: 10px; }
 /* hide h2 headers */
 h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 
-#header {background: url(http://developer.linkedin.com/themes/linkedin-home/images/li_dev_header_bg.png) repeat-x 0% 100%;width: auto;border-bottom: 1px solid #CCC;height: 39px;margin: 10px auto 45px;}
-#header-texture{background: none;font-size: 250%;left: 0px; padding: 0px; top: -8px; position: relative; width: 836px; display: block}
+#header { background: url("../images/li_dev_header_bg.png") repeat-x 0% 100%; width: auto; border-bottom: 1px solid #CCC; height: 39px; margin: 10px auto 15px; }
+#header-texture { background: none; font-size: 250%; left: 0px; padding: 0px; top: -8px; position: relative; width: 836px; display: block; }
+#subheader { overflow: hidden; }
+
+#wrapper { margin: 0 10px; min-width: 840px; }
 
 /* TOOLTIPS */
-span.show-tooltip-text { display: none; position: absolute; font-size: 0.9em; padding: 6px; padding-left: 12px; padding-right: 12px; }
+.show-tooltip-text { display: none; position: absolute; font-size: 0.9em; padding: 6px; padding-left: 12px; padding-right: 12px; }
 
 /* WRAPPER */
-#main {  font-size: 120%; margin: 10px; min-width: 820px; overflow: hidden; }
+#main { font-size: 120%; margin: 10px 0; overflow: hidden; }
 
 /* SHARE */
-#tiny-url-container {float: right; display:inline; margin-top: -40px; margin-right: 25px;}
+#tiny-url-container { float: right; }
 
-/* LEFT CONTAINER */
-#container {  margin-left: 10px; background: #efefef; float: left; margin-right: 1%; padding: 10px; width: 68%; }
+/* CONTAINER */
+#container-wrapper { float: left; width: 71%; }
+#container {  background: #efefef; overflow: hidden; padding: 10px; }
 
 /* CONSOLE / EDITOR AREA */
 #console-container { overflow: hidden; width: 100%; }
@@ -25,7 +29,7 @@ span.show-tooltip-text { display: none; position: absolute; font-size: 0.9em; pa
 #status { display: none; float: left; }
 
 /* BUTTONS */
-#button-container { float: right; }
+#button-container { float: left; }
 
 #savecode { display: none; }
 #copyurl { display: none; }
@@ -40,7 +44,7 @@ span.show-tooltip-text { display: none; position: absolute; font-size: 0.9em; pa
 #icons span.ui-icon { float: left; margin: 0 4px; }
 
 /* SIDEBAR */
-#sidebar { float: left; width: 28%; }
+#sidebar { float: left; width: 28%; margin-right: 1%; }
 /* override some of the form properties for usability */
 #framework-form .standard-form { margin: 0; }
 #framework-form .standard-form ul { padding: 0; }
@@ -49,29 +53,28 @@ span.show-tooltip-text { display: none; position: absolute; font-size: 0.9em; pa
 #examples ul { list-style: none; margin: 0; padding: 0; }
 #examples ul ul { list-style: circle; margin-left: 24px; }
 #examples ul ul.no-bullet { list-style: none; }
+.example-group { display: none; }
+#example-url { border: 1px solid #adadad; padding: 0.2em; }
 /* resizable textarea handle */
-#api-options { height:80px; }
-.ui-resizable-se { bottom: 14px; right: 3px; }
+#api-options { height:80px; width:190px; }
+.ui-resizable-se { bottom: 16px; right: 5px; }
 
 /* MESSAGES */
-.ui-selected-example {border: 1px solid #fad42e; background: #fbec88 url(jqueryui/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x; color: #363636; }
-
+/* message containers */
+#error-container { display: none; float: right; }
 .ui-state-error,
-.ui-state-highlight { margin-bottom:0.5em; padding: 0pt 0.7em; }
+.ui-state-highlight { padding: 0 0.7em; }
 .ui-state-error p,
-.ui-state-highlight p { margin: 1em 0; }
+.ui-state-highlight p { margin: .5em 0; }
 .ui-icon-alert,
 .ui-icon-check,
 .ui-icon-info { float: left; margin-right: 0.3em; }
 /* noscript alert message, hide if JS enabled */
 .js .noscript { display: none; }
-/* message containers */
-#error-container { display: none; }
-#error-container {float: left; max-width: 300;}
 /* success message override */
 .ui-state-success,
 .ui-widget-content .ui-state-success,
-.ui-widget-header .ui-state-success { border: 1px solid #5f9531; background: #def1ca none; }
+.ui-widget-header .ui-state-success { background: #e5f7dd none; border: 1px solid #ccc; padding: 0.7em; }
 
 /* LOGGING */
 #logging { list-style: square; }

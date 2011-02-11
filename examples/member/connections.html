@@ -23,7 +23,6 @@ function onLinkedInLogin() {
 function setConnections(connections) {
   var connHTML = "<ul>";
   for (id in connections) {
-    console.log(id);
     connHTML = connHTML + "<li><a href=\"" + connections[id].publicProfileURL + "\">";
     
     /* picture url not always there, must be defensive */
@@ -39,7 +38,6 @@ function setConnections(connections) {
   }
 
   connHTML = connHTML + "</ul>";
-  console.log(connHTML);
   document.getElementById("connectionsdata").innerHTML = connHTML;
 }
 </script>
