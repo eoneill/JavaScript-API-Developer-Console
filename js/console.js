@@ -125,8 +125,8 @@ var tryLoadExample = function() {
     }
     else {
       // load a random example
-      var $category;
-      /*do {
+      /*var $category;
+      do {
         $category = $(".example-group:random", "#examples");
       } while ( !$category.is(".load-url") );*/
       $(".example-group:random", "#examples").show().find("a:random").click();  // select a random example from the open category
