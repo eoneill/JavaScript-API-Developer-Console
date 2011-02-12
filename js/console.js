@@ -258,6 +258,10 @@ var executeCode = function( allowBadOnLoad ) {
   
   // fix inconsistent loc.protocol (some browsers will return "http", others return "http:")
   var protocol = loc.protocol.replace(/\:/g,"") + "://";
+  // we currently don't serve https://platform.linkedin.com/in.js
+  // when we do, we will remove this line of code and allow real https requests
+  // in the meantime, we will have to allow unsecure content in IE
+  protocol = "http://";
   
   var doTinyURL;
   var connectURL = $frameworkSelector.val();
