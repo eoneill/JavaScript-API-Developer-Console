@@ -558,7 +558,6 @@ var setContainerSize = function() {
   else {
     $contractSandbox.show("fast");
   }
-
   $codeMirror.height(height);
   $sandbox.height(height);
 };
@@ -764,9 +763,11 @@ $("#cleanup").click( function(event) {
 
 // event handlers to expand and contract the sandbox
 $("#expand-sandbox").click( function(event) {
+  
+  var height = $sandbox.height()+EXPAND_HEIGHT;
   $contractSandbox.show("fast");
-  $sandbox.height( $sandbox.height()+EXPAND_HEIGHT );
-  $("html, body").animate({scrollTop: $sandbox.height()}, "slow");
+  $sandbox.height(height);
+  $("html, body").stop(true, true).animate({scrollTop: height}, "fast");
   event.preventDefault();
   return false;
 });
@@ -776,7 +777,7 @@ $contractSandbox.click( function(event) {
     height = MIN_CONTAINER_HEIGHT;
     $(this).hide("fast");
   }
-  $sandbox.height( height );
+  $sandbox.height(height);
   event.preventDefault();
   return false;
 });
@@ -790,7 +791,11 @@ $("#icons li").hover(
 
 // set container size and bind to window resize
 setContainerSize();
-$(window).resize( setContainerSize );
+// IE triggers window resize for everything,
+// so we will only apply this to non-IE browsers
+if( /*@cc_on !@*/true ) {
+  $(window).resize( setContainerSize );
+}
 
 // scroll wheel handler
 //  we do this to prevent weird behavior when scrollTop animations

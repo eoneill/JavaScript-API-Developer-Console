@@ -31,10 +31,11 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 #button-container { float: left; }
 
 /* RESULT */
-#result-container { border: 1px dashed #adadad; margin-top: 10px; position: relative; }
+#result-container { border: 1px dashed #adadad; margin-top: 10px; overflow: hidden; position: relative; }
 #sandbox { font-size: 130%; height: 300px; padding: 10px; background: #fff; margin: 5px; border: 1px solid #adadad;}
 #sandbox iframe { background: transparent; border: 0; height: 100%; width: 100%; }
-#icons { float: right;  margin-top: 10px; }
+#iconbox { height: 40px; overflow: hidden; }
+#icons { float: right;  margin: 5px; }
 #icons li { cursor: pointer; float: left; margin: 2px; padding: 4px 0; position: relative; }
 #icons span.ui-icon { float: left; margin: 0 4px; }
 
