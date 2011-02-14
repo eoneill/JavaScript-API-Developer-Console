@@ -49,10 +49,7 @@ var MIN_CONTAINER_HEIGHT = 260; //minimum height that a container should be (in 
 var EXPAND_HEIGHT = 100;        // height to expand the result bar
 var BITLY_USER = "eoneill";     // Bit.ly API settings
 var BITLY_KEY = "R_4f1d96e89bee1a8d88edb114dd0c1e4b";
-var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5"; // LinkedIn Labs' API Key
-//var CONNECT_API_KEY = "rCmYw5qSiBcSGJq9E93QAt-S_TS1NvOAbyLowao1ByvQpkxF9A8ahxSzrjsKZmCk"; // Eugene's API Key
-//var CONNECT_API_KEY = "RKOTRRRAOquK5xqdWJyVp8LW704mgwovmD1FUzOif5R61XGRyfW_X_2pJgt_fIjo"; // K's API Key
-//var PROD_OPTIONS = { authorize:true, credentials_cookie:false, api_key:false }; // Default, enforced, options for Production framework
+var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5";
 
 /*
  * cache some DOM elements
@@ -336,25 +333,21 @@ var executeCode = function( allowBadOnLoad ) {
     $("#framework-status").qtip("destroy");
   }
   $("#framework-status").qtip( {
-    content: '<strong>Framework:</strong> '+framework+'<br/><strong>Parameters:</strong><br/>'
+    content: '<strong>Framework URL:</strong> '+connectURL+'<br/><strong>Parameters:</strong><br/>'
                 +params.replace(/\n/g,'<br/>'),
     position: {
       corner: {
-        target: 'bottomMiddle',
-        tooltip: 'topMiddle'
+        target: "bottomMiddle",
+        tooltip: "topMiddle"
       }
     },
     style: {
       width: 300,
-      //background: '#A2D959',
-      //color: 'black',
-      //textAlign: 'center',
       border: {
         width: 2,
         radius: 4
-        //color: '#A2D959'
       },
-      tip: 'topMiddle',
+      tip: "topMiddle",
       name: "light"
     }
   });
@@ -834,6 +827,27 @@ if( /*@cc_on !@*/true ) {
 //  are being used and the user tries to scroll the mouse wheel
 $(window).scroll( function() {
   $("html, body").stop(true, true);
+});
+
+
+// add tooltip for 
+$("#tiny-url-container").qtip( {
+  content: "Use this URL to quickly share or bookmark this example!",
+  position: {
+    corner: {
+      target: "bottomMiddle",
+      tooltip: "topMiddle"
+    }
+  },
+  style: {
+    width: 300,
+    border: {
+      width: 2,
+      radius: 4
+    },
+    tip: "topMiddle",
+    name: "light"
+  }
 });
 
 });   // END wait for on DOMReady
