@@ -262,7 +262,7 @@ var executeCode = function( allowBadOnLoad ) {
   // in the meantime, we will have to allow unsecure content in IE (broken in IE6 still)
   protocol = "http://";
   
-  var framework = "";
+  var framework = "Production";
   var doTinyURL;
   var connectURL = $frameworkSelector.val();
   var apiOptions = $apiOptions.val();
@@ -319,7 +319,6 @@ var executeCode = function( allowBadOnLoad ) {
   if(connectURL === "custom") {
     connectURL = $frameworkCustomURL.val();
     if(connectURL === "") {
-      framework = "Production";
       connectURL = protocol + $("option", $frameworkSelector).first().val();
     }
     else {
@@ -329,16 +328,14 @@ var executeCode = function( allowBadOnLoad ) {
   else {
     connectURL = protocol + connectURL;
   }
-  
   // show the status of the framework
   $("#framework-using").text(framework);
   $("#framework-status").removeClass("ui-helper-hidden");
   // create a tooltip
   if($("#framework-status").data("qtip")) {
-    console.log("destroy qtip");
     $("#framework-status").qtip("destroy");
   }
-  $("#framework-status").qtip({
+  $("#framework-status").qtip( {
     content: '<strong>Framework:</strong> '+framework+'<br/><strong>Parameters:</strong><br/>'
                 +params.replace(/\n/g,'<br/>'),
     position: {
