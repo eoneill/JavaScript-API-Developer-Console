@@ -15,8 +15,10 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 /* WRAPPER */
 #main { font-size: 120%; margin: 10px 0; overflow: hidden; }
 
-/* SHARE */
-#tiny-url-container { float: right; }
+/* STATUS */
+#status { float: right; }
+#tiny-url-container { float: left; }
+#framework-status { float: left; margin-right: 10px; cursor: default; }
 
 /* CONTAINER */
 #container-wrapper { float: left; width: 71%; }

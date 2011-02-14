@@ -262,6 +262,7 @@ var executeCode = function( allowBadOnLoad ) {
   // in the meantime, we will have to allow unsecure content in IE (broken in IE6 still)
   protocol = "http://";
   
+  var framework = "";
   var doTinyURL;
   var connectURL = $frameworkSelector.val();
   var apiOptions = $apiOptions.val();
@@ -300,7 +301,6 @@ var executeCode = function( allowBadOnLoad ) {
   loc.hash = "#" + exampleData + "&" + preferences;
   
   doTinyURL = tinyURLs[loc.href];
-  
   cleanUpEnvironment( doTinyURL !== undef );
   
   // generate a TinyURL
@@ -319,12 +319,48 @@ var executeCode = function( allowBadOnLoad ) {
   if(connectURL === "custom") {
     connectURL = $frameworkCustomURL.val();
     if(connectURL === "") {
+      framework = "Production";
       connectURL = protocol + $("option", $frameworkSelector).first().val();
+    }
+    else {
+      framework = connectURL;
     }
   }
   else {
     connectURL = protocol + connectURL;
   }
+  
+  // show the status of the framework
+  $("#framework-using").text(framework);
+  $("#framework-status").removeClass("ui-helper-hidden");
+  // create a tooltip
+  if($("#framework-status").data("qtip")) {
+    console.log("destroy qtip");
+    $("#framework-status").qtip("destroy");
+  }
+  $("#framework-status").qtip({
+    content: '<strong>Framework:</strong> '+framework+'<br/><strong>Parameters:</strong><br/>'
+                +params.replace(/\n/g,'<br/>'),
+    position: {
+      corner: {
+        target: 'bottomMiddle',
+        tooltip: 'topMiddle'
+      }
+    },
+    style: {
+      width: 300,
+      //background: '#A2D959',
+      //color: 'black',
+      //textAlign: 'center',
+      border: {
+        width: 2,
+        radius: 4
+        //color: '#A2D959'
+      },
+      tip: 'topMiddle',
+      name: "light"
+    }
+  });
   
   // build the sandbox iframe
   try {
@@ -763,7 +799,6 @@ $("#cleanup").click( function(event) {
 
 // event handlers to expand and contract the sandbox
 $("#expand-sandbox").click( function(event) {
-  
   var height = $sandbox.height()+EXPAND_HEIGHT;
   $contractSandbox.show("fast");
   $sandbox.height(height);
