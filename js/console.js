@@ -355,7 +355,7 @@ var executeCode = function( allowBadOnLoad ) {
   try {
     if($includeButtons.is(":checked")) {
       var style = "border: 1px dashed #adadad; position: absolute; right: 20px; top: 5px; padding: 10px";
-      runCode += '<div style="'+style+'"><scr'+'ipt type="IN/Login">[ <a href="#" onclick="IN.User.logout(); return false;">logout</a> ]</scr'+'ipt></div>';
+      runCode += '<div style="'+style+'"><scr'+'ipt type="IN/Login" data-label="action">[ <a href="#" onclick="IN.User.logout(); return false;">logout</a> ]</scr'+'ipt></div>';
     }
     // set a window function that will give us the HTML for the sandbox
     // it gets overwritten on each run
@@ -715,6 +715,7 @@ $("#examples").load("examples/examples.html", function() {
   // collapse category groups
   var $exampleGroups = $(".example-group", this);
   
+  // attach tooltips for examples (descriptions)
   $("a[title]", this).qtip({
     style: {
       name: "light",
