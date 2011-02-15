@@ -52,6 +52,8 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 #examples ul ul { list-style: circle; margin-left: 24px; }
 #examples ul ul.no-bullet { list-style: none; }
 .example-group { display: none; }
+.example-group li { border: 1px solid #fff; }
+.example-group .ui-state-highlight { padding: 0; }
 #example-url { border: 1px solid #adadad; padding: 0.2em; }
 /* resizable textarea handle */
 #api-options { height: 80px; width: 190px; }

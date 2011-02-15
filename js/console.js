@@ -260,6 +260,7 @@ var executeCode = function( allowBadOnLoad ) {
   protocol = "http://";
   
   var framework = "Production";
+  var frameworkURL = $frameworkCustomURL.val();
   var doTinyURL;
   var connectURL = $frameworkSelector.val();
   var apiOptions = $apiOptions.val();
@@ -267,13 +268,13 @@ var executeCode = function( allowBadOnLoad ) {
   // store preferences in JSON formatted string
   var preferences = '{'
         +'"framework":"'+$frameworkSelector.val()+'",'
-        +'"frameworkurl":"'+$frameworkCustomURL.val()+'",'
+        +'"frameworkurl":"'+frameworkURL+'",'
         +'"apikey":"'+apiKey+'",'
         +'"apioptions":"'+apiOptions.replace(/\n/g,"\\n")+'",'  // we need to escape newlines for valid JSON
         +'"sessionbuttons":'+$includeButtons.is(":checked")     // note: this is boolean, no quotes
       +'}';
   // some API key magic
-  if(connectURL !== "custom" && !isCustomApiKey) {
+  if( (connectURL !== "custom" || frameworkURL === "") && !isCustomApiKey) {
     // default to the Connect API Key
     apiKey = "api_key: "+CONNECT_API_KEY+"\n";
   }
@@ -313,7 +314,7 @@ var executeCode = function( allowBadOnLoad ) {
   
   // was a custom URL provided?
   if(connectURL === "custom") {
-    connectURL = $frameworkCustomURL.val();
+    connectURL = frameworkURL;
     if(connectURL === "") {
       connectURL = protocol + $("option", $frameworkSelector).first().val();
     }
