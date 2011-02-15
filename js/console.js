@@ -131,6 +131,32 @@ var tryLoadExample = function() {
   }
 };
 
+/**
+ * TAKEN FROM IN.JS
+ */
+/**
+ * Splits a string more like PHP does. Basically, we want to break it into N parts
+ * based on a delimiter character
+ * @function str_split
+ * @param string {String} the string to split
+ * @param delimiter {String} the delimiter to split on
+ * @param limit {Integer} the number of pieces to return
+ * @return {Array} the array of pieces
+ */
+function str_split(string, delimiter, limit) {
+  if (!limit) {
+    return string.split(delimiter);
+  }
+  var splitted = string.split(delimiter);
+  if (splitted.length < limit) {
+    return splitted;
+  }
+  var partA = splitted.splice(0, limit - 1);
+  var partB = splitted.join(delimiter);
+  partA.push(partB);
+  return partA;
+}
+
 
 /**
  * helper function to clean up passed in options
@@ -158,7 +184,7 @@ var parseOptions = function( allowBadOnLoad ) {
     options = options.split("\n");
     $.each( options, function(key, value) {
       if( value !== "" ) {
-        var temp = value.replace(/\s+/g,"").split(":"); // removes whitespace and splits into key:value pairs
+        var temp = str_split(value.replace(/\s+/g,""), ":", 2); // removes whitespace and splits into key:value pairs
         var skip = false;
         /*
          * These rules might be a bit confusing, priority matters
