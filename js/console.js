@@ -304,7 +304,6 @@ var executeCode = function( allowBadOnLoad ) {
   if(doTinyURL === undef) {
     getTinyURL(loc.href, function(tinyurl) {
       $tinyURL.text(tinyurl).attr("href",tinyurl);
-      $tinyURLContainer.css("display","inline");
       tinyURLs[loc.href] = tinyurl;
     });
   }
@@ -345,7 +344,7 @@ var executeCode = function( allowBadOnLoad ) {
       width: 300,
       border: {
         width: 2,
-        radius: 4
+        radius: 3
       },
       tip: "topMiddle",
       name: "light"
@@ -716,6 +715,23 @@ $("#examples").load("examples/examples.html", function() {
   // collapse category groups
   var $exampleGroups = $(".example-group", this);
   
+  $("a[title]", this).qtip({
+    style: {
+      name: "light",
+      tip: "leftMiddle",
+      border: {
+        width: 2,
+        radius: 3
+      }
+    }, 
+    position: {
+      corner: {
+         target: 'rightMiddle',
+         tooltip: 'leftMiddle'
+      }
+    }
+  });
+  
   // add category event handler (click)
   $("a.category", this).click( function(event) {
     var id = $(this).attr("href");
@@ -843,7 +859,7 @@ $("#tiny-url-container").qtip( {
     width: 300,
     border: {
       width: 2,
-      radius: 4
+      radius: 3
     },
     tip: "topMiddle",
     name: "light"

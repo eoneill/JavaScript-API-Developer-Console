@@ -3,22 +3,22 @@ h1 { float: left; font-size: 30px; padding: 5px; padding-left: 10px; }
 /* hide h2 headers */
 h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 
-#header { background: url("../images/li_dev_header_bg.png") repeat-x 0% 100%; width: auto; border-bottom: 1px solid #CCC; height: 39px; margin: 10px auto 15px; }
-#header-texture { background: none; font-size: 250%; left: 0px; padding: 0px; top: -8px; position: relative; width: 836px; display: block; }
+
+
+#header { background: url("../images/li_dev_header_bg.png") repeat-x 0 100%; width: auto; border-bottom: 1px solid #CCC; height: 39px; margin: 10px auto 15px; }
+#header-texture { background: none; display: block; font-size: 250%; left: 0px; padding: 0px; top: -8px; position: relative; width: 836px; }
 #subheader { overflow: hidden; width: 100%; }
 
-#wrapper { margin: 0 10px; min-width: 840px; }
-
-/* TOOLTIPS */
-.show-tooltip-text { display: none; position: absolute; font-size: 0.9em; padding: 6px; padding-left: 12px; padding-right: 12px; }
 
 /* WRAPPER */
+#wrapper { margin: 0 10px; min-width: 840px; }
+
 #main { font-size: 120%; margin: 10px 0; overflow: hidden; }
 
 /* STATUS */
-#status { float: right; }
-#tiny-url-container { float: left; }
-#framework-status { float: left; margin-right: 10px; cursor: default; }
+#status { float: right; overflow: hidden; }
+#tiny-url-container { float: left; min-width: 320px; }
+#framework-status { cursor: default; float: left; margin-right: 10px; }
 
 /* CONTAINER */
 #container-wrapper { float: left; width: 71%; }
@@ -34,7 +34,7 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 
 /* RESULT */
 #result-container { border: 1px dashed #adadad; margin-top: 10px; overflow: hidden; position: relative; }
-#sandbox { font-size: 130%; height: 300px; padding: 10px; background: #fff; margin: 5px; border: 1px solid #adadad;}
+#sandbox { background: #fff; border: 1px solid #adadad; font-size: 130%; height: 300px; margin: 5px; padding: 10px; }
 #sandbox iframe { background: transparent; border: 0; height: 100%; width: 100%; }
 #iconbox { height: 40px; overflow: hidden; }
 #icons { float: right;  margin: 5px; }
@@ -42,7 +42,7 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 #icons span.ui-icon { float: left; margin: 0 4px; }
 
 /* SIDEBAR */
-#sidebar { float: left; width: 28%; margin-right: 1%; }
+#sidebar { float: left; margin-right: 1%; width: 28%; }
 /* override some of the form properties for usability */
 #framework-form .standard-form { margin: 0; }
 #framework-form .standard-form ul { padding: 0; }
@@ -54,7 +54,7 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 .example-group { display: none; }
 #example-url { border: 1px solid #adadad; padding: 0.2em; }
 /* resizable textarea handle */
-#api-options { height:80px; width:190px; }
+#api-options { height: 80px; width: 190px; }
 .ui-resizable-se { bottom: 16px; right: 5px; }
 
 /* MESSAGES */
@@ -70,3 +70,6 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 .js .noscript { display: none; }
 /* success message override */
 .ui-state-success { background: #e5f7dd none; border: 1px solid #ccc; padding: 0.7em; }
+
+/* TOOLTIP */
+.qtip-content { font-size: 11px; }
