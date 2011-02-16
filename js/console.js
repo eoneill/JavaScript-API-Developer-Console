@@ -639,7 +639,7 @@ var getTinyURL = function( longURL, onSuccess ) {
             +"&longUrl="+encodeURIComponent(longURL)
             +"&format=json";
   if(URL.length >= 2048) {
-    throwErrorMessage("error1005","Short URL cannot be generated. Potential loss of data due to URL length limitations. Consider creating an example file.","highlight");
+    throwErrorMessage("error1005","Short URL cannot be generated. Consider creating an example file.","highlight");
   }
   else {
     $.ajax({
