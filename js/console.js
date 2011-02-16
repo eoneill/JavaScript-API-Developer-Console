@@ -473,8 +473,10 @@ var loadExample = function( loadData, title ) {
     removeErrorMessage("badonload");
     $("#title").text("Code");
     if( exampleURL.search("c=") === -1 ) { // no custom code was provided
-      if( exampleURL.match(/(https?|ftp):\/\/.+/) ) {
-        // a full URL was provided, we pull down the file using CSV via YQL
+      if( exampleURL.match(/(https?|ftp):\/\/.+/) ) { // a full URL was provided
+        // remove previous error messages
+        removeAllErrorMessages();
+        // pull down the file using CSV via YQL
         exampleURL = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22"+encodeURIComponent(exampleURL)+"%22&format=json";
         $.ajax({
           url : exampleURL,
@@ -560,7 +562,7 @@ var throwErrorMessage = function( id, message, type ) {
     errType = "Warning: ";
     iconType = "info";
   } 
-  console.log(errType+message);
+  //console.log(errType+message);
   $errorContainer.show("fast");
   if( $errID.length > 0 ) {
     $(".error-message", $errID).html(message);
