@@ -67,7 +67,8 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 .ui-state-error p,
 .ui-state-highlight p { margin: .5em 0; }
 .ui-icon-alert,
-.ui-icon-check { float: left; margin-right: 0.3em; }
+.ui-icon-check,
+.ui-icon-info { float: left; margin-right: 0.3em; }
 /* noscript alert message, hide if JS enabled */
 .js .noscript { display: none; }
 /* success message override */
