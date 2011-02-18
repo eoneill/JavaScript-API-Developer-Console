@@ -860,11 +860,7 @@ $("#icons li").hover(
 
 // set container size and bind to window resize
 setContainerSize();
-// IE triggers window resize for everything,
-// so we will only apply this to non-IE browsers
-if( /*@cc_on !@*/true ) {
-  $(window).resize( setContainerSize );
-}
+$(window).resize( setContainerSize );
 
 // scroll wheel handler
 //  we do this to prevent weird behavior when scrollTop animations
