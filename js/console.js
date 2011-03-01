@@ -414,7 +414,7 @@ var executeCode = function( allowBadOnLoad ) {
 var getCode = function() {
   if(window.getSandboxHtml) {
     var html = window.getSandboxHtml().replace(CONNECT_API_KEY,"YOUR_API_KEY").replace(SESSION_BUTTON,"");
-    $("#codeview").html("<textarea style=\"height: 98%; width: 100%; font-family:monospace; font-size:10pt;\">"+html+"</textarea>").dialog("open");
+    $("#codeview textarea").val(html).parent().dialog("open");
   }
   else {
     setTimeout(getCode, 100);
