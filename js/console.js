@@ -392,8 +392,9 @@ var executeCode = function( allowBadOnLoad ) {
               '<script type="text/javascript" src="'+connectURL+'">',
               params,
               '</script>',
+              '\n\n',
               runCode,
-              '\n\n']
+              '']
               .join("\n");
     };
     // append sandbox iframe
