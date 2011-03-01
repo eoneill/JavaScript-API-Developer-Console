@@ -392,7 +392,7 @@ var executeCode = function( allowBadOnLoad ) {
               '<script type="text/javascript" src="'+connectURL+'">',
               params,
               '</script>',
-              '\n\n',
+              '\n',
               runCode,
               '']
               .join("\n");
