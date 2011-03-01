@@ -389,11 +389,11 @@ var executeCode = function( allowBadOnLoad ) {
     // it gets overwritten on each run
     window.getSandboxHtml = function getSandboxHtml() {
       return ['',
-              '<scr'+'ipt type="text/javascript" src="'+connectURL+'">',
+              '<script type="text/javascript" src="'+connectURL+'">',
               params,
-              '</scr'+'ipt>',
+              '</script>',
               runCode,
-              '']
+              '\n\n']
               .join("\n");
     };
     // append sandbox iframe
