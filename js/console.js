@@ -50,6 +50,8 @@ var EXPAND_HEIGHT = 100;        // height to expand the result bar
 var BITLY_USER = "eoneill";     // Bit.ly API settings
 var BITLY_KEY = "R_4f1d96e89bee1a8d88edb114dd0c1e4b";
 var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5";
+var SESSION_BUTTON = '\n<div style="border: 1px dashed #adadad; position: absolute; right: 20px; top: 5px; padding: 10px;"><script type="IN/Login" data-label="action">[ <a href="#" onclick="IN.User.logout(); return false;">logout</a> ]</script></div>';
+
 
 /*
  * cache some DOM elements
@@ -381,8 +383,7 @@ var executeCode = function( allowBadOnLoad ) {
   // build the sandbox iframe
   try {
     if($includeButtons.is(":checked")) {
-      var style = "border: 1px dashed #adadad; position: absolute; right: 20px; top: 5px; padding: 10px";
-      runCode += '<div style="'+style+'"><scr'+'ipt type="IN/Login" data-label="action">[ <a href="#" onclick="IN.User.logout(); return false;">logout</a> ]</scr'+'ipt></div>';
+      runCode += SESSION_BUTTON;
     }
     // set a window function that will give us the HTML for the sandbox
     // it gets overwritten on each run
@@ -401,6 +402,21 @@ var executeCode = function( allowBadOnLoad ) {
   }
   catch(e) {
     throwErrorMessage("error1003","Failed to inject Framework\n"+e);
+  }
+};
+
+
+/**
+ * helper function to display the generated code
+ * @method  getCode
+ */
+var getCode = function() {
+  if(window.getSandboxHtml) {
+    var html = window.getSandboxHtml().replace(CONNECT_API_KEY,"YOUR_API_KEY").replace(SESSION_BUTTON,"");
+    $("#codeview").html("<textarea style=\"height: 355px; width: 776px; font-family:monospace; font-size:10pt;\">"+html+"</textarea>").dialog("open");
+  }
+  else {
+    setTimeout(getCode, 100);
   }
 };
 
@@ -802,6 +818,16 @@ $("#examples").load("examples/examples.html", function() {
   // have to use this method to prevent race condition
   setTimeout(tryLoadExample, 40);
   
+  
+  /*continually refresh the page, testing for bug in IE*\/
+  var f = function f() {
+    var links = $("a",$exampleGroups);
+    var randInt = Number((Math.floor(Math.random()*(links.length-1))));
+    links.eq(randInt).click(); setTimeout(f, 4000)
+  };
+  setTimeout( f , 4000);
+  /**/
+  
   // now that we have the content loaded, we can expand the accordion
   $accordion.accordion('activate',2);   // open accordion to Examples
 });
@@ -814,6 +840,12 @@ $("a", "#button-container").button();
 // make the container pretty (jQuery UI)
 $("#container").addClass("ui-widget ui-widget-content ui-corner-all");
 
+
+$("#getcode").click( function(event) {
+  getCode();
+  event.preventDefault();
+  return false;
+});
 
 // event handler for Run click
 $("#runcode").click( function(event) {
@@ -857,6 +889,11 @@ $("#icons li").hover(
   function() { $(this).addClass("ui-state-hover"); },
   function() { $(this).removeClass("ui-state-hover"); }
 );
+
+
+// create a dialog box to hold the code
+$("#codeview").dialog({ autoOpen: false, height: 400, width: 800 });
+
 
 // set container size and bind to window resize
 setContainerSize();
