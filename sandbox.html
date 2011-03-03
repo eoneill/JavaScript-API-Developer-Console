@@ -5,7 +5,9 @@
 <script type="text/javascript">
 // get the html to write from the parent, and document.write it
 // this might well be the only time document.write is acceptable
-document.write(parent.getSandboxHtml());
+if(parent.getSandboxHtml) {
+  document.write(parent.getSandboxHtml());
+}
 </script>
 </body>
 </html>
