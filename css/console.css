@@ -78,4 +78,4 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 .qtip-content { font-size: 11px; }
 
 /* FULL CODE VIEW */
-#codeview textarea { font-family: monospace; font-size: 10pt; height: 355px; width: 100%; }
+#codeview textarea { font-family: monospace; font-size: 10pt; height: 353px; width: 100%; }
