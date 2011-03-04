@@ -893,7 +893,7 @@ $("#icons li").hover(
 
 
 // create a dialog box to hold the code
-$("#codeview").dialog({ autoOpen: false, height: 400, width: 800 });
+$("#codeview").dialog({ autoOpen: false, height: 400, width: 800, resizable: false });
 
 
 // set container size and bind to window resize
