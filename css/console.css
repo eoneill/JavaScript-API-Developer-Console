@@ -79,3 +79,4 @@ h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 
 /* FULL CODE VIEW */
 #codeview textarea { font-family: monospace; font-size: 10pt; height: 350px; width: 768px; }
+#codeview { display: none; }

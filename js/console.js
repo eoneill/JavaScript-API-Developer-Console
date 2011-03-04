@@ -51,7 +51,7 @@ var BITLY_USER = "eoneill";     // Bit.ly API settings
 var BITLY_KEY = "R_4f1d96e89bee1a8d88edb114dd0c1e4b";
 var CONNECT_API_KEY = "up8hQML83EYXioHsDsw4ktyShFAoNwJzhY8WDmJPZWdqRVzaIvw9r0phLieHH_c5";
 var SESSION_BUTTON = '\n<div style="border: 1px dashed #adadad; position: absolute; right: 20px; top: 5px; padding: 10px;"><script type="IN/Login" data-label="action">[ <a href="#" onclick="IN.User.logout(); return false;">logout</a> ]</script></div>';
-
+var MSIE6 = document.body.style.maxHeight === undef;
 
 /*
  * cache some DOM elements
@@ -869,6 +869,9 @@ $("#expand-sandbox").click( function(event) {
   var height = $sandbox.height()+EXPAND_HEIGHT;
   $contractSandbox.show("fast");
   $sandbox.height(height);
+  if(MSIE6) {
+    $("#sandboxrunner").height(height);
+  }
   $("html, body").stop(true, true).animate({scrollTop: height}, "fast");
   event.preventDefault();
   return false;
@@ -880,6 +883,9 @@ $contractSandbox.click( function(event) {
     $(this).hide("fast");
   }
   $sandbox.height(height);
+  if(MSIE6) {
+    $("#sandboxrunner").height(height);
+  }
   event.preventDefault();
   return false;
 });
@@ -898,7 +904,11 @@ $("#codeview").dialog({ autoOpen: false, height: 400, width: 800, resizable: fal
 
 // set container size and bind to window resize
 setContainerSize();
-$(window).resize( setContainerSize );
+// IE triggers window resize for everything,
+// so we will only apply this to non-IE browsers
+if( /*@cc_on !@*/true ) {
+  $(window).resize( setContainerSize );
+}
 
 // scroll wheel handler
 //  we do this to prevent weird behavior when scrollTop animations
