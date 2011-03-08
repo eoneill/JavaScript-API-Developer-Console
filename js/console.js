@@ -68,14 +68,13 @@ var $errorContainer = $("#error-container");
 var $tinyURLContainer = $("#tiny-url-container");
 var $tinyURL = $("#tiny-url");
 var loc = window.location;
-// these DOM elements won't be available until ajax completes,
-// we could use live(), but we we'll just wait until the ajax request finishes
-var $frameworkSelector;
-var $frameworkCustom;
-var $frameworkCustomURL;
-var $apiOptions;
-var $apiKey;
-var $includeButtons;
+var $frameworkSelector = $("#framework-selector");
+var $frameworkCustom = $(".framework-custom", "#framework");
+var $frameworkCustomURL = $("#framework-url-custom");
+var $codeConsole = $("#code-console");
+var $apiOptions = $("#api-options");
+var $apiKey = $("#api-key");
+var $includeButtons = $("#include-buttons");
 
 // a few global-esque vars */
 var originalCode = "";  // used to compare if code changes occured
@@ -725,32 +724,6 @@ $accordion.accordion({
   collapsible: true   // allow all accordions to be collapsed (for active to work right)
 });
 
-
-// Load Framework selection via ajax
-$("#framework").load( "frameworks.html", function() {
-  $frameworkSelector = $("#framework-selector");
-  $frameworkCustom = $(".framework-custom", "#framework");
-  $frameworkCustomURL = $("#framework-url-custom");
-  $codeConsole = $("#code-console");
-  $apiOptions = $("#api-options");
-  $apiKey = $("#api-key");
-  $includeButtons = $("#include-buttons");
-
-  // restore preferences
-  restorePreferences(saved);
-
-  // Hide the custom input if a framework is selected
-  toggleCustomURL();
-  
-  // toggle the custom input when needed
-  $frameworkSelector.change( function() { toggleCustomURL("fast"); } );
-  
-  // make the options textarea resizeable
-  //  need to set margin to 0 or IE will center the textarea
-  $apiOptions.resizable({ handles: "se" }).parent().css("margin","0");
-  
-});
-
 // Load in reference material
 $("#reference").load("documentation.html");
 
@@ -815,6 +788,20 @@ $("#examples").load("examples/examples.html", function() {
     event.preventDefault();
     return false;
   });
+  
+  
+  // restore preferences
+  restorePreferences(saved);
+
+  // Hide the custom input if a framework is selected
+  toggleCustomURL();
+  
+  // toggle the custom input when needed
+  $frameworkSelector.change( function() { toggleCustomURL("fast"); } );
+  
+  // make the options textarea resizeable
+  //  need to set margin to 0 or IE will center the textarea
+  $apiOptions.resizable({ handles: "se" }).parent().css("margin","0");
   
   // have to use this method to prevent race condition
   setTimeout(tryLoadExample, 40);
