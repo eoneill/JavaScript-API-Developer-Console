@@ -326,7 +326,7 @@ var executeCode = function( allowBadOnLoad ) {
   
   // only update the hash if it doesn't exceed limits (breaks hash in IE otherwise)
   var hash = "#" + exampleData + "&" + preferences;
-  if(hash.length < 2048) {}
+  if(hash.length < 2048) {
     loc.hash = hash;
   }
   
