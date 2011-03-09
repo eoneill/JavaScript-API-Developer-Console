@@ -323,7 +323,12 @@ var executeCode = function( allowBadOnLoad ) {
   if(runCode !== originalCode) {
     exampleData = "c="+escape(runCode);
   }
-  loc.hash = "#" + exampleData + "&" + preferences;
+  
+  // only update the hash if it doesn't exceed limits (breaks hash in IE otherwise)
+  var hash = "#" + exampleData + "&" + preferences;
+  if(hash.length < 2048) {}
+    loc.hash = hash;
+  }
   
   doTinyURL = tinyURLs[loc.href];
   cleanUpEnvironment( doTinyURL !== undef );
