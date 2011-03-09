@@ -32,7 +32,7 @@ input,select,textarea,button { font-family:Arial,Helvetica,"Nimbus Sans L",sans-
 .standard-form { margin:20px 40px; }
 .standard-form label { font-size:130%;color:#333;background-color:transparent;font-weight:bold;display:block;float:left;text-align:right;width:185px;margin-right:10px; }
 .standard-form .fieldgroup.checkbox input { float:left; }
-.standard-form input,.standard-form select,.standard-form textarea { font-size:130%; }
+.standard-form input,.standard-form select,.standard-form textarea { font-size: 13px; }
 .standard-form.stacked { margin:0 10px; }
 .standard-form.stacked label { float:none;text-align:left;line-height:1.5; }
 .standard-form.stacked .fieldgroup { margin-left:0; }
