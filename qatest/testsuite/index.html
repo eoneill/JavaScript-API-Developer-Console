@@ -1,0 +1,73 @@
+<!-- onLoad: LinkedIn.Test.onLogin -->
+
+<div id='content'></div>
+<script type="in/login"></script>
+
+<script type='text/javascript'>
+
+// You can customize the test suites loaded here
+var testSuites = ['connections', 'member_updates', 'network_updates', 'profile', 'raw', 'search'];
+
+
+// set up console to prevent breaking browsers that don't support console.log
+if (!window.console || !window.console.log) {
+  window.console = window.console || {};
+  window.console.log = window.console.log || function(){};
+}
+
+var head = document.getElementsByTagName('head')[0];
+var baseURL = document.location.href;
+var qaDir = 'qatest/testsuite/';
+baseURL = baseURL.replace('sandbox.html',qaDir);
+
+var styles = document.createElement('link');
+styles.media = 'all';
+styles.type = 'text/css';
+styles.rel = 'stylesheet';
+styles.href = baseURL + '/css/default.css';
+head.appendChild(styles);
+
+var LinkedIn = LinkedIn || {};
+LinkedIn.Test = {};
+LinkedIn.Test.TIMEOUT = 10000;
+
+LinkedIn.Test.appendScript = function (name) {
+  var script= document.createElement('script');
+  script.type= 'text/javascript';
+  script.src= baseURL + 'js/tests/' + name + '.js'
+  head.appendChild(script);
+}
+
+LinkedIn.Test.onLogin = function () {
+  LinkedIn.Test.appendScript('_yui');
+  IN.Event.on(IN, 'auth', LinkedIn.Test.loadSuites);
+}
+
+LinkedIn.Test.loadSuites = function () {
+  for(var i=0; i < testSuites.length ; i++) {
+    LinkedIn.Test.appendScript(testSuites[i]);
+  }
+}
+
+LinkedIn.Test.Visuals = {
+  container : document.getElementById('content'),
+  title : document.title,
+  failures: 0,
+
+  addVisuals : function (testRunner) {
+    testRunner.subscribe(testRunner.TEST_PASS_EVENT, LinkedIn.Test.Visuals.onTestPassed);
+    testRunner.subscribe(testRunner.TEST_FAIL_EVENT, LinkedIn.Test.Visuals.onTestFailed);
+  },
+
+  onTestPassed : function (data) {
+    console.log(data);
+    LinkedIn.Test.Visuals.container.innerHTML += '<div class="test-case">' + data.testCase.name + ":" + data.testName + '</div>';
+  },
+
+  onTestFailed : function (data) {
+    LinkedIn.Test.Visuals.container.innerHTML += '<div class="test-case, fail" title="'+ data.error +'">' + data.testCase.name + ":" + data.testName + '</div>';
+    document.title = LinkedIn.Test.Visuals.title + " (" + (++LinkedIn.Test.Visuals.failures) + ")";
+    console.error(data);
+  }
+}
+</script>

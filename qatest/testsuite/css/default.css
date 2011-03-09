@@ -1,0 +1,9 @@
+*{font-family:Inconsolata, arial, serif;}
+#content div{border:1px solid gray;-webkit-border-radius:15px;-moz-border-radius:15px;-o-border-radius:15px;height:15px;width:800px;cursor:pointer;margin:5px;padding:5px 15px 10px 40px;}
+.test-case{background:url(./resources/ok.png) no-repeat left top;-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;background-color:#AFA;opacity:0.6;}
+.test-case:hover{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;opacity:1;background-color:#AFA;}
+div.fail:hover{-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;opacity:1;}
+div.fail{background:url(./resources/error.png) no-repeat left top;-webkit-transition:opacity 1s;-moz-transition:opacity 1s;-o-transition:opacity 1s;opacity:0.6;background-color:#FAA;}
+#connect-url,#connect-key{width:700px;font-size:20px;}
+#load-connect-framework{font-size:25px;cursor:pointer;}
+#title,#menu{padding:10px 20px;}
