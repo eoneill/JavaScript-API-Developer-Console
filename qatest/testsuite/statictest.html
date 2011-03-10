@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://qatest309b.qa.linkedin.com:8080/uas/in.js">
+api_key: consumer_key_3
+onLoad: onLinkedInLoad
+</script>
+</head><body>
+
+<script type="text/javascript">
+function onLinkedInLoad() {
+  IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
+}
+
+function onLinkedInLogin() {
+  // we pass field selectors as a single parameter (array of strings)
+  IN.API.Profile("me").fields("firstName", "lastName", "connections", "industry")
+  .result(function(result){
+    alert(result.values[0].firstName+'\n'+result.values[0].lastName+'\n'+result.values[0].connections._total);
+  });
+}
+</script>
+
+<script type="IN/Login"></script>
+
+</body>
+</html>
