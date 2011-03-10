@@ -20,8 +20,8 @@ YUI().use('test', function(Y) {
 
     "should return connections for self" : function ()
     {
-      IN.API.Connections("me").result(function(result){
-        this.resume(function(){
+      this.resume(function(){
+        IN.API.Connections("me").result(function(result){
           Y.Assert.isNotUndefined(result.values, "Results should be defined");
           Y.Assert.isString(result.values[0].firstName, "Should return first name");
           Y.Assert.isString(result.values[0].lastName, "Should return last name");
@@ -33,14 +33,14 @@ YUI().use('test', function(Y) {
 
     "should return connections using field selectors": function()
     {
-      IN.API.Connections("me").fields("firstName", "lastName")
-        .result(function(connections){
-          this.resume(function(){
+      this.resume(function(){
+        IN.API.Connections("me").fields("firstName", "lastName")
+          .result(function(connections){
             Y.Assert.isNotUndefined(connections.values, "Connections should be defined");
             Y.Assert.isString(connections.values[0].firstName, "Must bring firstName");
             Y.Assert.isUndefined(connections.values[0].headline, "Must not bring headline");    
-          });
-        },this);
+        });
+      },this);
 
       this.wait(LinkedIn.Test.TIMEOUT);
     },
@@ -55,13 +55,13 @@ YUI().use('test', function(Y) {
 
     "should call error() if asked for wrong fields" : function ()
     {
-      IN.API.Connections('me').fields('foo', 'bar')
-        .error(function(data){
-          this.resume(function(){});
-        }, this)
-        .result(function(data){
-          Y.Assert.fail('must not call result() but error()');
-        }, this);
+      this.resume(function(){
+        IN.API.Connections('me').fields('foo', 'bar')
+          .error(function(data){ })
+          .result(function(data){
+            Y.Assert.fail('must not call result() but error()');
+          });
+      }, this);
 
       this.wait(LinkedIn.Test.TIMEOUT);
     }
