@@ -14,10 +14,14 @@ function onLinkedInLoad() {
 
 function onLinkedInLogin() {
   // we pass field selectors as a single parameter (array of strings)
-  IN.API.Profile("me").fields("firstName", "lastName", "connections", "industry")
-  .result(function(result){
-    alert(result.values[0].firstName+'\n'+result.values[0].lastName+'\n'+result.values[0].connections._total);
-  });
+  IN.API.Profile("me")
+    .fields(["firstName", "lastName", "connections", "industry"])
+    .result(function(result){
+      alert(result.values[0].firstName+'\n'+result.values[0].lastName+'\n'+result.values[0].connections._total);
+    })
+    .error(function(){
+      alert('shit happens');
+    });
 }
 </script>
 
