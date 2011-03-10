@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
+
 <script type="text/javascript" src="http://eoneill-md.linkedin.biz:8080/uas/in.js">
   api_key: consumer_key_3
   onLoad: onLinkedInLoad
@@ -18,9 +20,11 @@ function onLinkedInLogin() {
     .fields(["firstName", "lastName", "connections", "industry"])
     .result(function(result){
       alert('IN.API.Profile("me") Passed:\n'+result.values[0].firstName+'\n'+result.values[0].lastName+'\n'+result.values[0].connections._total);
+      console.log(result.values[0]);
     })
     .error(function(err){
-      alert('shit happens:\n'+err);
+      alert('shit happens:\n');
+      console.log(err)
     });
 }
 </script>
