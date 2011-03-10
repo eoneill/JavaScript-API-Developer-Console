@@ -6,10 +6,10 @@
 <script type='text/javascript'>
 var LinkedIn = LinkedIn || {};
 LinkedIn.Test = {};
-LinkedIn.Test.TIMEOUT = (document.body.style.maxHeight) 10000 : 30000;  // for IE6 and older browsers, lets be generous with a 30 second timeout
+LinkedIn.Test.TIMEOUT = (document.body.style.maxHeight) ? 10000 : 30000;  // for IE6 and older browsers, lets be generous with a 30 second timeout
 
 // You can customize the test suites loaded here
-var LinkedIn.Test.Suites = ['connections', 'member_updates', 'network_updates', 'profile', 'raw', 'search'];
+LinkedIn.Test.Suites = ['connections', 'member_updates', 'network_updates', 'profile', 'raw', 'search'];
 
 
 // set up console to prevent breaking browsers that don't support console.log
