@@ -4,9 +4,12 @@
 <script type="in/login"></script>
 
 <script type='text/javascript'>
+var LinkedIn = LinkedIn || {};
+LinkedIn.Test = {};
+LinkedIn.Test.TIMEOUT = (document.body.style.maxHeight) 10000 : 30000;  // for IE6 and older browsers, lets be generous with a 30 second timeout
 
 // You can customize the test suites loaded here
-var testSuites = ['connections', 'member_updates', 'network_updates', 'profile', 'raw', 'search'];
+var LinkedIn.Test.Suites = ['connections', 'member_updates', 'network_updates', 'profile', 'raw', 'search'];
 
 
 // set up console to prevent breaking browsers that don't support console.log
@@ -27,10 +30,6 @@ styles.rel = 'stylesheet';
 styles.href = baseURL + '/css/default.css';
 head.appendChild(styles);
 
-var LinkedIn = LinkedIn || {};
-LinkedIn.Test = {};
-LinkedIn.Test.TIMEOUT = 10000;
-
 LinkedIn.Test.appendScript = function (name) {
   var script= document.createElement('script');
   script.type= 'text/javascript';
@@ -44,8 +43,8 @@ LinkedIn.Test.onLogin = function () {
 }
 
 LinkedIn.Test.loadSuites = function () {
-  for(var i=0; i < testSuites.length ; i++) {
-    LinkedIn.Test.appendScript(testSuites[i]);
+  for(var i=0; i < LinkedIn.Test.Suites.length ; i++) {
+    LinkedIn.Test.appendScript(LinkedIn.Test.Suites[i]);
   }
 }
 
