@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
+
 <script type="text/javascript" src="http://qatest309b.qa.linkedin.com:8080/uas/in.js">
-api_key: consumer_key_3
-onLoad: onLinkedInLoad
+  api_key: consumer_key_3
+  onLoad: onLinkedInLoad
 </script>
-</head><body>
+</head>
+<body>
 
 <script type="text/javascript">
-function onLinkedInLoad() {
-  IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
-}
-
-function onLinkedInLogin() {
+function testIt() {
   // we pass field selectors as a single parameter (array of strings)
   IN.API.Profile("me")
     .fields(["firstName", "lastName", "connections", "industry"])
     .result(function(result){
-      alert(result.values[0].firstName+'\n'+result.values[0].lastName+'\n'+result.values[0].connections._total);
+      console.log('IN.API.Profile("me") Passed: ',result.values[0]);
     })
-    .error(function(){
-      alert('shit happens');
+    .error(function(err){
+      console.log('IN.API.Profile("me") FAILED: ',err);
     });
 }
 </script>
 
-<script type="IN/Login"></script>
+<script type="IN/Login" data-onAuth="testIt"></script>
 
 </body>
 </html>
