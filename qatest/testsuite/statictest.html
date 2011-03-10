@@ -19,8 +19,8 @@ function onLinkedInLogin() {
     .result(function(result){
       alert('IN.API.Profile("me") Passed:\n'+result.values[0].firstName+'\n'+result.values[0].lastName+'\n'+result.values[0].connections._total);
     })
-    .error(function(){
-      alert('shit happens');
+    .error(function(err){
+      alert('shit happens:\n'+err);
     });
 }
 </script>
