@@ -23,7 +23,7 @@ function onLinkedInLogin() {
       console.log(result.values[0]);
     })
     .error(function(err){
-      alert('shit happens:\n');
+      alert('::SHIT HAPPENS::\n'+err.message+'\n - '+err.raw_message);
       console.log(err)
     });
 }
