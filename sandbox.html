@@ -3,11 +3,12 @@
 <head><title>Sandbox</title></head>
 <body>
 <script type="text/javascript">
-// get the html to write from the parent, and document.write it
-// this might well be the only time document.write is acceptable
-if(parent.getSandboxHtml) {
-  document.write(parent.getSandboxHtml());
-}
+  // get the html to write from the parent, and document.write it
+  // this might well be the only time document.write is acceptable
+  if(parent.getSandboxHtml) {
+    var html = parent.getSandboxHtml();
+    document.write(html);
+  }
 </script>
 </body>
 </html>
