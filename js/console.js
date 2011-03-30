@@ -725,17 +725,20 @@ var clearLog = function() {
  */
 var getTinyURL = function( longURL, onSuccess ) {
   lastURL = longURL;
-  var URL = "http://api.bit.ly/v3/shorten?"
-            +"login="+BITLY_USER
+  var protocol = loc.protocol.replace(/\:/g,"") + "://";
+  // we will use Bit.ly's SSL API if we are running on HTTPS
+  var urlPrefix = (protocol==="https://") ? "https://api-ssl" : "http://api";
+  var bitlyUrl = urlPrefix
+            +".bit.ly/v3/shorten?login="+BITLY_USER
             +"&apiKey="+BITLY_KEY
             +"&longUrl="+encodeURIComponent(longURL)
             +"&format=json";
-  if(URL.length >= 2048) {
+  if(bitlyUrl.length >= 2048) {
     throwErrorMessage("error1005","Short URL cannot be generated. Consider creating an example file.","highlight");
   }
   else {
     $.ajax({
-      url : URL,
+      url : bitlyUrl,
       dataType : "jsonp",
       success : function( data ) {
         onSuccess(data.data.url);
