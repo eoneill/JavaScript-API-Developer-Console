@@ -1,0 +1,24 @@
+<p>Member Profile JSAPI Demo</p>
+<p>This example demonstrates the use of the Profile() API call</p>
+<script type="text/javascript">
+function getProfile() {
+
+  IN.API.Profile("url=http://www.linkedin.com/in/dudcat")
+  .fields("firstName", "lastName", "industry", "distance", "summary")
+  .result(function(res) {
+/*    var user = res.values[0],
+        tmpl = ["<p>{firstName} {lastName} works in ",
+                "the {industry} industry. You are {distance} degree(s) ",
+                "away in the network. What follows is their summary.",
+                "</p><p>{summary}</p>"].join("");
+    
+    for (var name in user) {
+      tmpl = tmpl.replace(new RegExp("{"+name+"}", "g"), user[name]);
+    }
+*/    
+    document.getElementById("profile").innerHTML = 'a'; //tmpl;
+  });
+}
+</script>
+<script type="IN/Login" data-onAuth="getProfile"></script>
+<div id="profile"></div>
