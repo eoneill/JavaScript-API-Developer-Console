@@ -4,8 +4,8 @@ h1 { float: left; font-size: 30px; padding: 5px; padding-left: 10px; }
 h2 { margin-bottom: 5px; padding: 5px; font-weight: bold}
 
 #header { width:100%; border-bottom: 1px solid #CCC; margin-bottom:15px; overflow:hidden; }
-#header .logo{margin:6px 10px 6px 3px;float:left;width:92px;display:block;}
-#header .logo a{background:url('http://static02.linkedin.com/scds/common/u/img/sprite/sprite_global_v5.png') no-repeat;display:block;height:22px;text-indent:0; text-decoration:none;}
+#header .logo{margin:6px 10px 6px 3px;float:left;display:block;}
+#header .logo a{background:url('../images/logo_linkedin_92x22.png') no-repeat;display:block;height:22px;text-indent:0; text-decoration:none;}
 #header .logo a span { display:block; font-weight:normal; color:#333; font-size:20px; line-height:22px; margin:-21px 0 0 100px;  }
 #header .logo a span.seo-hidden { text-indent:-12345px; margin:0; }
 
