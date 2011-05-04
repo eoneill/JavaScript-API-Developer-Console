@@ -7,13 +7,13 @@ YUI().use('test', function(Y) {
     name : "IN.API.Raw",
 
     //These test actually create activities and share so they are ignored by default
-    _should: {
+    /*_should: {
       ignore: {
         "should perform raw POST call (Activity Update)" : true,
         "should perform raw POST call (Share)" : true,
         "should perform raw PUT call" : true
       }
-    },
+    },*/
     
     "should return api name and resource" : function()
     {
