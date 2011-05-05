@@ -14,10 +14,8 @@ LinkedIn.Test.Suites = ['connections', 'member_updates', 'network_updates', 'pro
 
 
 // set up console to prevent breaking browsers that don't support console.log
-if (!window.console || !window.console.log) {
-  window.console = window.console || {};
-  window.console.log = window.console.log || function(){};
-}
+window.console = window.console || {};
+window.console.log = window.console.log || function (){};
 
 var head = document.getElementsByTagName('head')[0];
 var baseURL = document.location.href;

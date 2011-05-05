@@ -45,7 +45,7 @@ YUI().use('test', function(Y) {
             }, this)
             .error(function(response){
               this.resume(function(){
-                Assert.fail("Not 2xx response");
+                Y.Assert.fail("Not 2xx response");
               });
             }, this);
       this.wait(LinkedIn.Test.TIMEOUT);
@@ -65,7 +65,7 @@ YUI().use('test', function(Y) {
             }, this)
             .error(function(response){
               this.resume(function(){
-                Assert.fail("Not 2xx response");
+                Y.Assert.fail("Not 2xx response");
               });
             }, this);
       this.wait(LinkedIn.Test.TIMEOUT);
@@ -85,7 +85,7 @@ YUI().use('test', function(Y) {
         }, this)
         .error(function(data){
           this.resume(function(){
-            Assert.fail("Not 2xx response");  
+            Y.Assert.fail("Not 2xx response");  
           })
         }, this);
       this.wait(LinkedIn.Test.TIMEOUT);
